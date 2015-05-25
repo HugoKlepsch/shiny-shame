@@ -31,17 +31,20 @@ public class clientMain {
 		ipTest.close();
 
 		String serverIP = (new BufferedReader(new InputStreamReader(System.in))).readLine();
-		int port = 6969;
-		Socket sock = new Socket(serverIP, port);
-		ObjectInputStream is = new ObjectInputStream(sock.getInputStream());
+		int inPort = 6969;
+		int outPort = 6970;
+		
+		ServerSocket serverSocket = new ServerSocket(outPort);
+		Socket inSocket = new Socket(serverIP, inPort);
+		ObjectInputStream inputStream = new ObjectInputStream(inSocket.getInputStream());
 
 		String message;
 		do {
-			message = (String) is.readObject();
+			message = (String) inputStream.readObject();
 			System.out.println(message);
 		} while (!message.equals("End"));
 
-		sock.close();
+		inSocket.close();
 		System.out.println("Socket closed");
 
 	}

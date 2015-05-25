@@ -36,18 +36,18 @@ public class serverMain {
 		ipTest.close();
 
 		int port = 6969;
-		ServerSocket sserverSock = new ServerSocket(port);
+		ServerSocket serverSocket = new ServerSocket(port);
 		threadArray = new Vector<ServerThread>();
 		int numConnections = 0;
 		while (numConnections < 100) {
-			Socket sock = sserverSock.accept();
+			Socket outSocket = serverSocket.accept();
 			numConnections++;
-			threadArray.add(new ServerThread(sock));
+			threadArray.add(new ServerThread(outSocket));
 			threadArray.get(threadArray.size() - 1).start();
 			//
 
 		}
-		sserverSock.close();
+		serverSocket.close();
 	}
 
 }
