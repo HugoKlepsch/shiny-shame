@@ -36,46 +36,60 @@ public class serverMain {
 		ipTest.close();
 
 		int port = 6969;
-		ServerSocket ssock = new ServerSocket(port);
+		ServerSocket sserverSock = new ServerSocket(port);
 		threadArray = new Vector<ServerThread>();
-
-		while (true) {
-			Socket sock = ssock.accept();
+		int numConnections = 0;
+		while (numConnections < 100) {
+			Socket sock = sserverSock.accept();
+			numConnections++;
 			threadArray.add(new ServerThread(sock));
 			threadArray.get(threadArray.size() - 1).start();
 			//
 
 		}
+		sserverSock.close();
 	}
 
 }
 
 class ServerThread extends Thread {
-	private Socket sock;
+	private Socket sockOut;
 	ObjectOutputStream outStream;
 
 	public ServerThread(Socket sock) {
-		this.sock = sock;
+		this.sockOut = sock;
 	}
 
-	public void run() { //this runs when you hit execute
-		System.out.println(sock.toString());
-		try {
-			outStream = new ObjectOutputStream(sock.getOutputStream());
+	private void spam() throws IOException {
+		System.out.println(sockOut.toString());
 
+		outStream = new ObjectOutputStream(sockOut.getOutputStream());
+
+		outStream.flush();
+		int counter = 0;
+		while (counter < 1000000) {
+			counter++;
+			outStream.writeObject("Counter: " + counter);
 			outStream.flush();
-			int counter = 0;
-			while (counter < 1000000) {
-				counter++;
-				outStream.writeObject("Counter: " + counter);
-				outStream.flush();
-			}
-			outStream.writeObject("End");
-			outStream.flush();
-			sock.close();
-			System.out.println("Socket closed");
+		}
+		outStream.writeObject("End");
+		outStream.flush();
+		sockOut.close();
+		System.out.println("Socket closed");
+
+	}
+	
+	@SuppressWarnings("unused")
+	private void ping() throws IOException{
+		outStream = new ObjectOutputStream(sockOut.getOutputStream());
+		
+	}
+
+	public void run() { // this runs when you hit execute
+		try {
+			spam();
 		} catch (IOException e) {
-			e.printStackTrace();
+			// TODO: handle exception
 		}
 	}
 }

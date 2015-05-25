@@ -5,13 +5,10 @@
 		 Description: 
  */
 
-
 package client;
 
 import java.net.*;
 import java.io.*;
-
-import javax.xml.ws.handler.MessageContext;
 
 /**
  * @author hugo
@@ -37,7 +34,6 @@ public class clientMain {
 		int port = 6969;
 		Socket sock = new Socket(serverIP, port);
 		ObjectInputStream is = new ObjectInputStream(sock.getInputStream());
-
 
 		String message;
 		do {
