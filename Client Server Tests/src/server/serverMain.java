@@ -58,7 +58,7 @@ class ServerThread extends Thread {
 		this.sock = sock;
 	}
 
-	public void run() {
+	public void run() { //this runs when you hit execute
 		System.out.println(sock.toString());
 		try {
 			outStream = new ObjectOutputStream(sock.getOutputStream());
