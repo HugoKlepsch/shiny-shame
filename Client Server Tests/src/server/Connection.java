@@ -14,6 +14,8 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import sharedPackages.LoginDeets;
+
 /**
  * @author graham
  *
@@ -25,17 +27,19 @@ public class Connection extends Thread {
 	public static int inPort = 6970;
 	static ObjectOutputStream scStream;
 	static ObjectInputStream csStream;
-	private static String username;
+	private LoginDeets deets;
 
 	public Connection(Socket sock) {
 		this.outSocket = sock;
 	}
 	
 	private void getUserName() throws IOException, ClassNotFoundException{
+		String username;
 		scStream.flush();
 		scStream.writeObject("Please enter your username");
 		scStream.flush();
-		this.username = (String) csStream.readObject();
+		username = (String) csStream.readObject();
+		this.deets = new LoginDeets(username, null);
 	}
 	
 	public void run(){
