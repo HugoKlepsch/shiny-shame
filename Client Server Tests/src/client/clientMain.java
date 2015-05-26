@@ -13,6 +13,8 @@ import java.io.ObjectInputStream.GetField;
 
 import javax.naming.InitialContext;
 
+import server.serverMain;
+
 /**
  * @author hugo
  *
@@ -20,6 +22,11 @@ import javax.naming.InitialContext;
 public class clientMain {
 	private static int inPort = 6969;
 	private static int outPort = 6970;
+	static ServerSocket serverSocket;
+	static Socket outSocket;
+	static ObjectOutputStream outStream;
+	static Socket inSocket;
+	static ObjectInputStream inStream;
 	/**
 	 * @author hugo
 	 * Date of creation: Apr 10, 2015 
@@ -40,6 +47,26 @@ public class clientMain {
 		return selfIP;
 	}
 	
+	private static double ping() throws IOException{
+		outStream.writeObject("ping");
+		int numTimes = 4;
+		long[] initTime = new long[numTimes];
+		long[] endTime = new long[numTimes];
+		for (int i = 0; i < 4; i++) {
+			initTime[i] = System.currentTimeMillis();
+			System.out.println("Client@outind");
+			outStream.writeInt(i);
+			outStream.flush();
+		}
+		for (int i = 0; i < 4; i++) {
+			int recievedInd = inStream.readInt();
+			endTime[recievedInd] = System.currentTimeMillis();
+			System.out.println("Client@recieveind: " + recievedInd);
+		}
+		
+		
+		return 1.0;
+	}
 	
 	private static void initNetwork() throws IOException, ClassNotFoundException{
 		String selfIP = getSelfIP();
@@ -47,13 +74,16 @@ public class clientMain {
 		System.out.println("Enter target IP address");
 		String serverIP = (new BufferedReader(new InputStreamReader(System.in))).readLine();
 		
-		ServerSocket serverSocket = new ServerSocket(outPort);
-		Socket inSocket = new Socket(serverIP, inPort);
-		ObjectInputStream inputStream = new ObjectInputStream(inSocket.getInputStream());
-
+		serverSocket = new ServerSocket(outPort);
+		inSocket = new Socket(serverIP, inPort);
+		inStream = new ObjectInputStream(inSocket.getInputStream());
+		outSocket = serverSocket.accept();
+		outStream = new ObjectOutputStream(outSocket.getOutputStream());
+		ping();
+		
 		String message;
 		do {
-			message = (String) inputStream.readObject();
+			message = (String) inStream.readObject();
 			System.out.println(message);
 		} while (!message.equals("End"));
 

@@ -48,8 +48,12 @@ public class serverMain {
 			numConnections++;
 			connectionArray.add(new ServerThread(outSocket));
 			connectionArray.get(connectionArray.size() - 1).start();
-			//
-
+			for (int i = 0; i < connectionArray.size(); i++) {
+				if(!connectionArray.get(i).isAlive()){
+					connectionArray.remove(i);
+					break;
+				}
+			}
 		}
 		serverSocket.close();
 	}
@@ -68,7 +72,8 @@ class ServerThread extends Thread {
 	InetAddress address;
 	private Socket inSocket; 
 	public static int inPort = 6970;
-	ObjectOutputStream outStream;
+	static ObjectOutputStream outStream;
+	static ObjectInputStream inStream;
 
 	public ServerThread(Socket sock) {
 		this.outSocket = sock;
@@ -89,9 +94,20 @@ class ServerThread extends Thread {
 
 	}
 	
-	@SuppressWarnings("unused")
-	private void ping() throws IOException{
-		
+	private void ping() throws IOException, NumberFormatException, ClassNotFoundException, InterruptedException{
+		System.out.println("server@ping()");
+		long startTime = System.currentTimeMillis();
+		long timeOut = 2000;
+		int recieved = 0;
+		int message;
+		do{
+			message = inStream.readInt();
+			System.out.println("Server@ping@message: " + message);
+//			Thread.sleep(1337);
+			recieved = recieved + ((message >= 0 && message < 4) ? 1 : 0);
+			outStream.writeInt(message);
+			outStream.flush();
+		} while(recieved < 4 && (System.currentTimeMillis() - startTime) < timeOut);
 	}
 
 	public void run() { // this runs when you hit execute
@@ -99,12 +115,21 @@ class ServerThread extends Thread {
 			outStream = new ObjectOutputStream(outSocket.getOutputStream());
 			address = outSocket.getInetAddress();
 			inSocket = new Socket(address, inPort);
-			ObjectInputStream inputStream = new ObjectInputStream(inSocket.getInputStream());
+			inStream = new ObjectInputStream(inSocket.getInputStream());
 			String message;
-			message = (String) inputStream.readObject();
+			message = (String) inStream.readObject();
+			if (message.equalsIgnoreCase("ping")) {
+				ping();
+			}
 		} catch (IOException e) {
 			// TODO: handle exception
 		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
