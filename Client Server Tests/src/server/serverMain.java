@@ -8,9 +8,13 @@
 package server;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.Vector;
 
@@ -19,6 +23,8 @@ import java.util.Vector;
  *
  */
 public class serverMain {
+	public static int outPort = 6969;
+	
 	public static Vector<ServerThread> threadArray;
 
 	/**
@@ -35,8 +41,8 @@ public class serverMain {
 		System.out.println(ipTest.getLocalAddress().getHostAddress());
 		ipTest.close();
 
-		int port = 6969;
-		ServerSocket serverSocket = new ServerSocket(port);
+
+		ServerSocket serverSocket = new ServerSocket(outPort);
 		threadArray = new Vector<ServerThread>();
 		int numConnections = 0;
 		while (numConnections < 100) {
@@ -53,17 +59,20 @@ public class serverMain {
 }
 
 class ServerThread extends Thread {
-	private Socket sockOut;
+	private Socket outSocket;
+	InetAddress address;
+	private Socket inSocket; 
+	public static int inPort = 6970;
 	ObjectOutputStream outStream;
 
 	public ServerThread(Socket sock) {
-		this.sockOut = sock;
+		this.outSocket = sock;
 	}
 
 	private void spam() throws IOException {
-		System.out.println(sockOut.toString());
+		
 
-		outStream = new ObjectOutputStream(sockOut.getOutputStream());
+		
 
 		outStream.flush();
 		int counter = 0;
@@ -74,22 +83,30 @@ class ServerThread extends Thread {
 		}
 		outStream.writeObject("End");
 		outStream.flush();
-		sockOut.close();
+		outSocket.close();
 		System.out.println("Socket closed");
 
 	}
 	
 	@SuppressWarnings("unused")
 	private void ping() throws IOException{
-		outStream = new ObjectOutputStream(sockOut.getOutputStream());
+		outStream = new ObjectOutputStream(outSocket.getOutputStream());
 		
 	}
 
 	public void run() { // this runs when you hit execute
 		try {
-			spam();
+			outStream = new ObjectOutputStream(outSocket.getOutputStream());
+			address = outSocket.getInetAddress();
+			inSocket = new Socket(address, inPort);
+			ObjectInputStream inputStream = new ObjectInputStream(inSocket.getInputStream());
+			String message;
+			message = (String) inputStream.readObject();
 		} catch (IOException e) {
 			// TODO: handle exception
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
