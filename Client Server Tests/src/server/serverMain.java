@@ -103,11 +103,11 @@ class ServerThread extends Thread {
 		do{
 			message = inStream.readInt();
 			System.out.println("Server@ping@message: " + message);
-//			Thread.sleep(1337);
+			Thread.sleep(1337);
 			recieved = recieved + ((message >= 0 && message < 4) ? 1 : 0);
 			outStream.writeInt(message);
 			outStream.flush();
-		} while(recieved < 4 && (System.currentTimeMillis() - startTime) < timeOut);
+		} while(recieved < 3 && (System.currentTimeMillis() - startTime) < timeOut);
 	}
 
 	public void run() { // this runs when you hit execute
@@ -120,6 +120,7 @@ class ServerThread extends Thread {
 			message = (String) inStream.readObject();
 			if (message.equalsIgnoreCase("ping")) {
 				ping();
+				spam();
 			}
 		} catch (IOException e) {
 			// TODO: handle exception

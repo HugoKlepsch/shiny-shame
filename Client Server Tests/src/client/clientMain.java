@@ -57,15 +57,15 @@ public class clientMain {
 			System.out.println("Client@outind");
 			outStream.writeInt(i);
 			outStream.flush();
-		}
-		for (int i = 0; i < 4; i++) {
-			int recievedInd = inStream.readInt();
-			endTime[recievedInd] = System.currentTimeMillis();
-			System.out.println("Client@recieveind: " + recievedInd);
+			endTime[i] = System.currentTimeMillis();
 		}
 		
+		long diffSum = 0;
+		for (int i = 0; i < endTime.length; i++) {
+			diffSum += (endTime[i] - initTime[i]);
+		}
 		
-		return 1.0;
+		return diffSum / endTime.length;
 	}
 	
 	private static void initNetwork() throws IOException, ClassNotFoundException{
@@ -79,7 +79,7 @@ public class clientMain {
 		inStream = new ObjectInputStream(inSocket.getInputStream());
 		outSocket = serverSocket.accept();
 		outStream = new ObjectOutputStream(outSocket.getOutputStream());
-		ping();
+		System.out.println(ping());
 		
 		String message;
 		do {
