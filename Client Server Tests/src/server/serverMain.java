@@ -119,7 +119,7 @@ class ServerThread extends Thread {
 			String message;
 			message = (String) inStream.readObject();
 			if (message.equalsIgnoreCase("ping")) {
-				ping();
+//				ping();
 				spam();
 			}
 		} catch (IOException e) {
@@ -128,9 +128,6 @@ class ServerThread extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
