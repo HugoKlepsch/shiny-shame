@@ -5,7 +5,7 @@
 		 Description: 
  */
 
-package client;
+package oldClient;
 
 import java.net.*;
 import java.io.*;
