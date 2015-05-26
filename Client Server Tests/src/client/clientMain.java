@@ -64,6 +64,15 @@ public class clientMain {
 		return diffSum / endTime.length;
 	}
 	
+	private static void spam() throws IOException, ClassNotFoundException{
+		outStream.writeObject("spam");
+		String message;
+		do {
+			message = (String) inStream.readObject();
+			System.out.println(message);
+		} while (!message.equals("End"));
+	}
+	
 	private static void initNetwork() throws IOException, ClassNotFoundException{
 		String selfIP = getSelfIP();
 		System.out.println("Self IP is: " + selfIP);
@@ -75,13 +84,9 @@ public class clientMain {
 		inStream = new ObjectInputStream(inSocket.getInputStream());
 		outSocket = serverSocket.accept();
 		outStream = new ObjectOutputStream(outSocket.getOutputStream());
-		System.out.println("ping: " + ping());
+//		System.out.println("ping: " + ping());
 		
-		String message;
-		do {
-			message = (String) inStream.readObject();
-			System.out.println(message);
-		} while (!message.equals("End"));
+		spam();
 
 		inSocket.close();
 		System.out.println("Socket closed");
