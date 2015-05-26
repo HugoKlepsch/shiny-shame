@@ -25,7 +25,7 @@ import java.util.Vector;
 public class serverMain {
 	public static int outPort = 6969;
 	
-	public static Vector<ServerThread> threadArray;
+	public static Vector<ServerThread> connectionArray;
 
 	/**
 		 * @author hugo
@@ -37,23 +37,28 @@ public class serverMain {
 		 * @Description: ( ͡° ͜ʖ ͡°)
 		 */
 	public static void main(String[] args) throws UnknownHostException, IOException {
-		Socket ipTest = new Socket("192.168.1.1", 80);
-		System.out.println(ipTest.getLocalAddress().getHostAddress());
-		ipTest.close();
-
-
+		String selfIP = getSelfIP();
+		System.out.println("Self IP: " + selfIP);
+		
 		ServerSocket serverSocket = new ServerSocket(outPort);
-		threadArray = new Vector<ServerThread>();
+		connectionArray = new Vector<ServerThread>();
 		int numConnections = 0;
 		while (numConnections < 100) {
 			Socket outSocket = serverSocket.accept();
 			numConnections++;
-			threadArray.add(new ServerThread(outSocket));
-			threadArray.get(threadArray.size() - 1).start();
+			connectionArray.add(new ServerThread(outSocket));
+			connectionArray.get(connectionArray.size() - 1).start();
 			//
 
 		}
 		serverSocket.close();
+	}
+	
+	private static String getSelfIP() throws IOException{
+		Socket ipTest = new Socket("192.168.1.1", 80);
+		String selfIP = ipTest.getLocalAddress().getHostAddress();
+		ipTest.close();
+		return selfIP;
 	}
 
 }
@@ -70,10 +75,6 @@ class ServerThread extends Thread {
 	}
 
 	private void spam() throws IOException {
-		
-
-		
-
 		outStream.flush();
 		int counter = 0;
 		while (counter < 1000000) {
@@ -90,7 +91,6 @@ class ServerThread extends Thread {
 	
 	@SuppressWarnings("unused")
 	private void ping() throws IOException{
-		outStream = new ObjectOutputStream(outSocket.getOutputStream());
 		
 	}
 
