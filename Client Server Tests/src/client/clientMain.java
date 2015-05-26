@@ -9,11 +9,7 @@ package client;
 
 import java.net.*;
 import java.io.*;
-import java.io.ObjectInputStream.GetField;
 
-import javax.naming.InitialContext;
-
-import server.serverMain;
 
 /**
  * @author hugo
@@ -49,7 +45,7 @@ public class clientMain {
 	
 	private static double ping() throws IOException{
 		outStream.writeObject("ping");
-		int numTimes = 4;
+		int numTimes = 1;
 		long[] initTime = new long[numTimes];
 		long[] endTime = new long[numTimes];
 		for (int i = 0; i < 4; i++) {
@@ -79,7 +75,7 @@ public class clientMain {
 		inStream = new ObjectInputStream(inSocket.getInputStream());
 		outSocket = serverSocket.accept();
 		outStream = new ObjectOutputStream(outSocket.getOutputStream());
-		System.out.println(ping());
+		System.out.println("ping: " + ping());
 		
 		String message;
 		do {
