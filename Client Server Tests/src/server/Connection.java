@@ -79,12 +79,10 @@ public class Connection extends Thread {
 			
 			
 		} catch (IOException e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 	}
