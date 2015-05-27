@@ -57,7 +57,7 @@ public class Connection extends Thread {
 					currIndex = mainThread.getCurrentMessageIndex();
 					scStream.writeObject(currIndex);
 					scStream.flush();
-					System.out.println(actionRequest.getAction());
+					
 				} else if(actionRequest.getAction() == GETMESSAGE){
 					wantedIndex = actionRequest.getIndex();
 					message = mainThread.getMessage(wantedIndex);
@@ -71,11 +71,13 @@ public class Connection extends Thread {
 					 Message connectMsg = new Message(rootDeets, msg);
 					 mainThread.addMessage(connectMsg);
 				}
+				System.out.println(userDeets.getUserName() + " " + actionRequest.getAction());
 			} while (actionRequest.getAction() != DISCONNECT);
 			String msg = userDeets.getUserName() + " disconnected";
 			Message disConnectMsg = new Message(rootDeets, msg);
 			mainThread.addMessage(disConnectMsg);
 			scStream.close(); 
+			outSocket.close();
 			
 			
 		} catch (IOException e) {
