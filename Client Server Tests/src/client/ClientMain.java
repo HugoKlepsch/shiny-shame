@@ -2,28 +2,38 @@
 		 Title: ClientMain.java
 		 Programmer: hugo
 		 Date of creation: May 26, 2015
-		 Description: 
+		 Description: A quick and dirty computer client for the squad messenger beta
 */
 
 
 package client;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * @author hugo
  *
  */
 public class ClientMain {
-
+	private static BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
+	
 	/**
 		 * @author hugo
 		 * Date of creation: May 26, 2015 
 		 * @param: None
 		 * @return: None
+	 * @throws IOException 
 		 * @Description: ( ͡° ͜ʖ ͡°)
 		 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	public static void main(String[] args) throws IOException {
+		System.out.println("Enter username to connect as: ");
+		String userName = userIn.readLine();
+		System.out.println("Enter the IP address to connect to: ");
+		String address = userIn.readLine();
+		
+		
 	}
 
 }
