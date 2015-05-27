@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Queue;
 
+import sharedPackages.LoginDeets;
 import sharedPackages.Message;
 
 /**
@@ -22,6 +23,7 @@ import sharedPackages.Message;
 public class ClientMain {
 	private static BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
 	private static int localIndex = 0;
+	private static int remoteIndex = 0;
 	private static boolean stayAlive = true;
 	public static Queue<Message> messageQueue; 
 	
@@ -38,15 +40,18 @@ public class ClientMain {
 		String userName = userIn.readLine();
 		System.out.println("Enter the IP address to connect to: ");
 		String address = userIn.readLine();
+		LoginDeets creds = new LoginDeets(userName, null);
 		
 		//TODO constructor
 		
 		System.out.println("Type \"Exit\" to close");
-		String message =  "";
-		while(!(message.equals("Exit"))){
-			message = userIn.readLine();
-			if (!(message.equals("Exit"))) {
-				
+		String messageContent =  "";
+		Message message;
+		while(!(messageContent.equals("Exit"))){
+			messageContent = userIn.readLine();
+			message = new Message(creds, messageContent);
+			if (!(messageContent.equals("Exit"))) {
+				messageQueue.add(message);
 			}
 		}
 	
@@ -64,6 +69,24 @@ public class ClientMain {
 	 */
 	public static void setLocalIndex(int localIndex) {
 		ClientMain.localIndex = localIndex;
+	}
+	
+	/**
+	 * @return the localIndex
+	 */
+	public static int getRemoteIndex() {
+		return remoteIndex;
+	}
+
+	/**
+	 * @param localIndex the localIndex to set
+	 */
+	public static void setRemoteIndex(int remoteIndex) {
+		ClientMain.remoteIndex = remoteIndex;
+	}
+	
+	public static boolean isUpToDate(){
+		return (localIndex == remoteIndex ? true : false);
 	}
 
 	/**
