@@ -16,6 +16,7 @@ import java.net.Socket;
 import sharedPackages.ActionRequest;
 import sharedPackages.LoginDeets;
 import sharedPackages.Message;
+import sharedPackages.ActionTypes;
 
 /**
  * @author graham
@@ -27,12 +28,7 @@ public class Connection extends Thread {
 	private ObjectInputStream csStream;
 	private LoginDeets userDeets;
 	private static LoginDeets rootDeets = new LoginDeets("root", "dank");
-	private static final int GETCURRENTMESSAGEINDEX = 1;
-	private static final int GETMESSAGE = 2;
-	private static final int SENDMESSAGE = 3;
-	private static final int DISCONNECT = 4;
-	private static final int CONNECT = 5;
-
+	
 	public Connection(Socket sock) {
 		this.outSocket = sock;
 	}
@@ -53,26 +49,26 @@ public class Connection extends Thread {
 			int currIndex;
 			do {
 				actionRequest = (ActionRequest) csStream.readObject();
-				if(actionRequest.getAction() == GETCURRENTMESSAGEINDEX){
+				if(actionRequest.getAction() == ActionTypes.GETCURRENTMESSAGEINDEX){
 					currIndex = mainThread.getCurrentMessageIndex();
 					scStream.writeObject(currIndex);
 					scStream.flush();
 					
-				} else if(actionRequest.getAction() == GETMESSAGE){
+				} else if(actionRequest.getAction() == ActionTypes.GETMESSAGE){
 					wantedIndex = actionRequest.getIndex();
 					message = mainThread.getMessage(wantedIndex);
 					sendMsg(message);
-				} else if(actionRequest.getAction() == SENDMESSAGE){
+				} else if(actionRequest.getAction() == ActionTypes.SENDMESSAGE){
 					message = actionRequest.getMessage();
 					mainThread.addMessage(message);
-				} else if(actionRequest.getAction() == CONNECT){
+				} else if(actionRequest.getAction() == ActionTypes.CONNECT){
 					 userDeets = actionRequest.getMessage().getCredentials();
 					 String msg = userDeets.getUserName() + " connected";
 					 Message connectMsg = new Message(rootDeets, msg);
 					 mainThread.addMessage(connectMsg);
 				}
 				System.out.println(userDeets.getUserName() + " " + actionRequest.getAction());
-			} while (actionRequest.getAction() != DISCONNECT);
+			} while (actionRequest.getAction() != ActionTypes.DISCONNECT);
 			String msg = userDeets.getUserName() + " disconnected";
 			Message disConnectMsg = new Message(rootDeets, msg);
 			mainThread.addMessage(disConnectMsg);

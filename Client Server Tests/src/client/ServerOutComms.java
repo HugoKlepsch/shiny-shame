@@ -16,6 +16,7 @@ import java.net.UnknownHostException;
 import sharedPackages.ActionRequest;
 import sharedPackages.LoginDeets;
 import sharedPackages.Message;
+import sharedPackages.ActionTypes;
 
 /**
  * @author graham
@@ -27,11 +28,6 @@ public class ServerOutComms extends Thread{
 	public static int loopDelay = 333;
 	private static ObjectOutputStream csStream;
 	private LoginDeets userDeets;
-	private static final int GETCURRENTMESSAGEINDEX = 1;
-	private static final int GETMESSAGE = 2;
-	private static final int SENDMESSAGE = 3;
-	private static final int DISCONNECT = 4;
-	private static final int CONNECT = 5;
 	private String ipAddress;
 	
 	public ServerOutComms(String ipAddress, LoginDeets userDeets){
@@ -40,7 +36,7 @@ public class ServerOutComms extends Thread{
 	}
 	
 	private void sendMsg(Message message) throws IOException{
-		csStream.writeObject(new ActionRequest(SENDMESSAGE, message));
+		csStream.writeObject(new ActionRequest(ActionTypes.SENDMESSAGE, message));
 		csStream.flush();
 	}
 	
@@ -48,10 +44,10 @@ public class ServerOutComms extends Thread{
 		try {
 		socket = new Socket(this.ipAddress, port);
 		csStream = new ObjectOutputStream(socket.getOutputStream());
-		ActionRequest connectRequest = new ActionRequest(CONNECT, new Message(userDeets, null));
+		ActionRequest connectRequest = new ActionRequest(ActionTypes.CONNECT, new Message(userDeets, null));
 		csStream.writeObject(connectRequest);
 		csStream.flush();
-		ActionRequest indexRequest = new ActionRequest(GETCURRENTMESSAGEINDEX);
+		ActionRequest indexRequest = new ActionRequest(ActionTypes.GETCURRENTMESSAGEINDEX);
 		while(ClientMain.StayAlive()){
 			Thread.sleep(loopDelay);
 			csStream.writeObject(indexRequest);
@@ -62,13 +58,13 @@ public class ServerOutComms extends Thread{
 				}
 			} else{
 				for(int i = ClientMain.getLocalIndex() + 1; i<ClientMain.getRemoteIndex();i++){
-					ActionRequest getMsgRequest = new ActionRequest(GETMESSAGE, i);
+					ActionRequest getMsgRequest = new ActionRequest(ActionTypes.GETMESSAGE, i);
 					csStream.writeObject(getMsgRequest);
 					csStream.flush();
 				}
 			}
 		}
-		ActionRequest disconnectRequest = new ActionRequest(DISCONNECT);
+		ActionRequest disconnectRequest = new ActionRequest(ActionTypes.DISCONNECT);
 		csStream.writeObject(disconnectRequest);
 		csStream.flush();
 		Thread.sleep(400);
