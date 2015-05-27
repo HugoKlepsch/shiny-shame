@@ -18,8 +18,8 @@ import java.io.InputStreamReader;
  */
 public class ClientMain {
 	private static BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
-	private int localIndex = 0;
-	private boolean stayAlive = true;
+	private static int localIndex = 0;
+	private static boolean stayAlive = true;
 	
 	/**
 		 * @author hugo
@@ -36,34 +36,36 @@ public class ClientMain {
 		String address = userIn.readLine();
 		
 		//TODO constructor
+		
+	
 	}
 
 	/**
 	 * @return the localIndex
 	 */
-	public int getLocalIndex() {
+	public static int getLocalIndex() {
 		return localIndex;
 	}
 
 	/**
 	 * @param localIndex the localIndex to set
 	 */
-	public void setLocalIndex(int localIndex) {
-		this.localIndex = localIndex;
+	public static void setLocalIndex(int localIndex) {
+		ClientMain.localIndex = localIndex;
 	}
 
 	/**
 	 * @return the stayAlive
 	 */
-	public boolean StayAlive() {
+	public static boolean StayAlive() {
 		return stayAlive;
 	}
 
 	/**
 	 * @param stayAlive the stayAlive to set
 	 */
-	public void setAlive(boolean stayAlive) {
-		this.stayAlive = stayAlive;
+	public static void setAlive(boolean stayAlive) {
+		ClientMain.stayAlive = stayAlive;
 	}
 
 }
