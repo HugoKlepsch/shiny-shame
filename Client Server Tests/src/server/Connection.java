@@ -29,20 +29,14 @@ public class Connection extends Thread {
 	public static int inPort = 6970;
 	private ObjectOutputStream scStream;
 	private ObjectInputStream csStream;
-	private LoginDeets deets;
+	private LoginDeets userDeets;
+	private static LoginDeets rootDeets = new LoginDeets("root", "dank");
 
-	public Connection(Socket sock) {
+	public Connection(Socket sock, LoginDeets userDeets) {
 		this.outSocket = sock;
+		this.userDeets = userDeets;
 	}
 	
-	private void getUserName() throws IOException, ClassNotFoundException{
-		String username;
-		scStream.flush();
-		scStream.writeObject("Please enter your username");
-		scStream.flush();
-		username = (String) csStream.readObject();
-		this.deets = new LoginDeets(username, null);
-	}
 	
 	private void sendMsg(Message message) throws IOException{
 		scStream.writeObject(message);
@@ -55,7 +49,6 @@ public class Connection extends Thread {
 			address = outSocket.getInetAddress();
 			inSocket = new Socket(address, inPort);
 			csStream = new ObjectInputStream(inSocket.getInputStream());
-			getUserName();
 			ActionRequest actionRequest;
 			Message message;
 			int wantedIndex;
@@ -75,7 +68,8 @@ public class Connection extends Thread {
 					mainThread.addMessage(message);
 				}
 			} while (actionRequest.getAction() != 4);
-			Message disConnectMsg = new Message(deets, "disconnected" );
+			String msg = userDeets.getUserName() + "disconnected";
+			Message disConnectMsg = new Message(rootDeets, msg);
 			mainThread.addMessage(disConnectMsg);
 			scStream.close(); 
 			
