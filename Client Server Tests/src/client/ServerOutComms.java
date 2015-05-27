@@ -72,6 +72,7 @@ public class ServerOutComms extends Thread{
 		ActionRequest disconnectRequest = new ActionRequest(DISCONNECT);
 		csStream.writeObject(disconnectRequest);
 		csStream.flush();
+		Thread.sleep(400);
 		csStream.close();
 		} catch (IOException e){
 			e.printStackTrace();
