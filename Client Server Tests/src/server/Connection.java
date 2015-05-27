@@ -14,6 +14,10 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import sharedPackages.ActionRequest;
+import sharedPackages.LoginDeets;
+import sharedPackages.Message;
+
 /**
  * @author graham
  *
@@ -25,17 +29,24 @@ public class Connection extends Thread {
 	public static int inPort = 6970;
 	static ObjectOutputStream scStream;
 	static ObjectInputStream csStream;
-	private static String username;
+	private LoginDeets deets;
 
 	public Connection(Socket sock) {
 		this.outSocket = sock;
 	}
 	
 	private void getUserName() throws IOException, ClassNotFoundException{
+		String username;
 		scStream.flush();
 		scStream.writeObject("Please enter your username");
 		scStream.flush();
-		this.username = (String) csStream.readObject();
+		username = (String) csStream.readObject();
+		this.deets = new LoginDeets(username, null);
+	}
+	
+	private void sendMsg(Message message) throws IOException{
+		scStream.writeObject(message);
+		scStream.flush();
 	}
 	
 	public void run(){
@@ -45,17 +56,26 @@ public class Connection extends Thread {
 			inSocket = new Socket(address, inPort);
 			csStream = new ObjectInputStream(inSocket.getInputStream());
 			getUserName();
-			String message;
+			ActionRequest actionRequest;
+			Message message;
+			int wantedIndex;
 			do {
-				message = (String) csStream.readObject();
-				if(message.equalsIgnoreCase("1")){
+				actionRequest = (ActionRequest) csStream.readObject();
+				if(actionRequest.getAction() == 1){
 					//call getCurrentMsgNum()
 					//outStream.writeObject(currMsgNum);
 					//outStream.flush();
-				} else{
-					
+				} else if(actionRequest.getAction() == 2){
+					wantedIndex = actionRequest.getIndex();
+					//message = getMsg(wantedIndex);
+//					sendMsg(message);
+				} else if(actionRequest.getAction() == 3){
+					message = actionRequest.getMessage();
+					//call addMsg();
 				}
-			} while (message.equalsIgnoreCase("Quit"));
+			} while (actionRequest.getAction() != 4);
+			//addMsg(deets.getUserName() + "disconnected");
+			scStream.close();
 			
 			
 		} catch (IOException e) {
