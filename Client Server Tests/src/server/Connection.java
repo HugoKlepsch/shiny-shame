@@ -57,19 +57,22 @@ public class Connection extends Thread {
 					scStream.flush();
 					
 				} else if(actionRequest.getAction() == ActionTypes.CSGETMESSAGE){
+					System.out.println(userDeets.getUserName() + " " + actionRequest.getAction());
 					wantedIndex = actionRequest.getIndex();
 					message = mainThread.getMessage(wantedIndex);
 					sendMsg(message);
 				} else if(actionRequest.getAction() == ActionTypes.CSSENDMESSAGE){
+					System.out.println(userDeets.getUserName() + " " + actionRequest.getAction());
 					message = actionRequest.getMessage();
 					mainThread.addMessage(message);
 				} else if(actionRequest.getAction() == ActionTypes.CSCONNECT){
+					System.out.println(userDeets.getUserName() + " " + actionRequest.getAction());
 					 userDeets = actionRequest.getMessage().getCredentials();
 					 String msg = userDeets.getUserName() + " connected";
 					 Message connectMsg = new Message(rootDeets, msg);
 					 mainThread.addMessage(connectMsg);
 				}
-				System.out.println(userDeets.getUserName() + " " + actionRequest.getAction());
+				
 			} while (actionRequest.getAction() != ActionTypes.CSDISCONNECT);
 			String msg = userDeets.getUserName() + " disconnected";
 			Message disConnectMsg = new Message(rootDeets, msg);
