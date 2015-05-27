@@ -39,7 +39,7 @@ public class ServerOutComms {
 	}
 	
 	private void sendMsg(Message message) throws IOException{
-		csStream.writeObject(message);
+		csStream.writeObject(new ActionRequest(SENDMESSAGE, message));
 		csStream.flush();
 	}
 	
