@@ -82,11 +82,11 @@ public class mainThread {
 		message.setIndex(prevInd + 1);
 	}
 
-	public int getCurrentMessageIndex() {
+	public static int getCurrentMessageIndex() {
 		return messages.lastElement().getIndex();
 	}
 
-	public Message getMessage(int index) {
+	public static Message getMessage(int index) {
 		return messages.get(index);
 	}
 
