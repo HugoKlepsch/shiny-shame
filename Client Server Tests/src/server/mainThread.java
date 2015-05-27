@@ -82,7 +82,7 @@ public class mainThread {
 		message.setIndex(prevInd + 1);
 	}
 
-	public long getCurrentMsgIndex() {
+	public int getCurrentMessageIndex() {
 		return messages.lastElement().getIndex();
 	}
 
