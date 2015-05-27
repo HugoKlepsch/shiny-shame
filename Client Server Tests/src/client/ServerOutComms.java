@@ -54,7 +54,7 @@ public class ServerOutComms extends Thread{
 		long debugCount = 0;
 		while(ClientMain.StayAlive()){
 			System.out.println(debugCount++);
-			Thread.sleep(5);
+			Thread.sleep(1);
 			csStream.writeObject(indexRequest);
 			csStream.flush();
 			if(ClientMain.isUpToDate()){
