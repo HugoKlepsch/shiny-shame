@@ -58,7 +58,7 @@ public class Connection extends Thread {
 			getUserName();
 			ActionRequest actionRequest;
 			Message message;
-			long wantedIndex;
+			int wantedIndex;
 			do {
 				actionRequest = (ActionRequest) csStream.readObject();
 				if(actionRequest.getAction() == 1){

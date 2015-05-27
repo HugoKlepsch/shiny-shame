@@ -3,7 +3,7 @@ package sharedPackages;
 public class ActionRequest {
 	private int action;
 	private Message message;
-	private long index;
+	private int index;
 	
 	public ActionRequest(int action){
 		this.action = action;
@@ -14,7 +14,7 @@ public class ActionRequest {
 		this.message = message;
 	}
 	
-	public ActionRequest(int action, long index){
+	public ActionRequest(int action, int index){
 		this.action = action;
 		this.index = index;
 	}
@@ -35,11 +35,11 @@ public class ActionRequest {
 		this.message = message;
 	}
 
-	public long getIndex() {
+	public int getIndex() {
 		return index;
 	}
 
-	public void setIndex(long index) {
+	public void setIndex(int index) {
 		this.index = index;
 	}
 	
