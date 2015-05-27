@@ -52,11 +52,17 @@ public class ClientMain {
 			message = new Message(creds, messageContent);
 			if (!(messageContent.equals("Exit"))) {
 				messageQueue.add(message);
+			} else {
+				setAlive(false);
 			}
 		}
 	
 	}
 
+	public static void addMessage(Message message){
+		System.out.println(message.getCredentials().getUserName() + ": " + message.getMessage());
+	}
+	
 	/**
 	 * @return the localIndex
 	 */
