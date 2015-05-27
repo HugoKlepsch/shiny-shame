@@ -49,8 +49,8 @@ public class ServerOutComms {
 		ActionRequest connectRequest = new ActionRequest(CONNECT, new Message(userDeets, null));
 		csStream.writeObject(connectRequest);
 		csStream.flush();
+		ActionRequest indexRequest = new ActionRequest(GETCURRENTMESSAGEINDEX);
 		while(ClientMain.StayAlive()){
-			ActionRequest indexRequest = new ActionRequest(GETCURRENTMESSAGEINDEX);
 			csStream.writeObject(indexRequest);
 			csStream.flush();
 			if(ClientMain.isUpToDate()){
