@@ -15,7 +15,7 @@ package sharedPackages;
 public class Message {
 	LoginDeets credentials;
 	String message;
-	long index;
+	int index;
 	
 	public Message(LoginDeets credentials, String message){
 		this.credentials = credentials;
@@ -26,14 +26,14 @@ public class Message {
 	/**
 	 * @return the index of the message 
 	 */
-	public long getIndex() {
+	public int getIndex() {
 		return index;
 	}
 
 	/**
 	 * @param the server can set the index of the message
 	 */
-	public void setIndex(long index) {
+	public void setIndex(int index) {
 		this.index = index;
 	}
 
