@@ -76,6 +76,7 @@ public class Connection extends Thread {
 			String msg = userDeets.getUserName() + " disconnected";
 			Message disConnectMsg = new Message(rootDeets, msg);
 			mainThread.addMessage(disConnectMsg);
+			System.out.println(msg);
 			scStream.close(); 
 			outSocket.close();
 			
