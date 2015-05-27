@@ -9,12 +9,13 @@
 package client;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import sharedPackages.ActionRequest;
 import sharedPackages.LoginDeets;
+import sharedPackages.Message;
 
 /**
  * @author graham
@@ -23,7 +24,6 @@ import sharedPackages.LoginDeets;
 public class ServerOutComms {
 	private static int port = 6969;
 	private Socket socket;
-	private static ObjectInputStream scStream;
 	private static ObjectOutputStream csStream;
 	private LoginDeets userDeets;
 	private static final int GETCURRENTMESSAGEINDEX = 1;
@@ -41,8 +41,19 @@ public class ServerOutComms {
 	
 	public void run() throws UnknownHostException, IOException{
 		socket = new Socket(this.ipAddress, port);
-		scStream = new ObjectInputStream(socket.getInputStream());
 		csStream = new ObjectOutputStream(socket.getOutputStream());
+		ActionRequest connectRequest = new ActionRequest(CONNECT, new Message(userDeets, null));
+		csStream.writeObject(connectRequest);
+		csStream.flush();
+		while(ClientMain.StayAlive()){
+			ActionRequest indexRequest = new ActionRequest(GETCURRENTMESSAGEINDEX);
+			csStream.writeObject(indexRequest);
+			csStream.flush();
+		}
+		ActionRequest disconnectRequest = new ActionRequest(DISCONNECT);
+		csStream.writeObject(disconnectRequest);
+		csStream.flush();
+		csStream.close();
 		
 	}
 
