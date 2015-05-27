@@ -41,6 +41,7 @@ public class mainThread {
 
 		serverSocket = new ServerSocket(outPort);
 		connections = new Vector<Connection>();
+		messages = new Vector<Message>();
 		while (true) {
 			Socket scSocket = serverSocket.accept();
 			connections.add(new Connection(scSocket));
