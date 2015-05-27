@@ -11,6 +11,9 @@ package client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Queue;
+
+import sharedPackages.Message;
 
 /**
  * @author hugo
@@ -20,6 +23,7 @@ public class ClientMain {
 	private static BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
 	private static int localIndex = 0;
 	private static boolean stayAlive = true;
+	public static Queue<Message> messageQueue; 
 	
 	/**
 		 * @author hugo
