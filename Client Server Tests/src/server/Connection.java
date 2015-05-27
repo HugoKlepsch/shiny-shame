@@ -1,6 +1,6 @@
 /*
 		 Title: connection.java
-		 Programmer: hugo
+		 Programmer: graham
 		 Date of creation: May 26, 2015
 		 Description: 
 */
@@ -24,11 +24,11 @@ import sharedPackages.Message;
  */
 public class Connection extends Thread {
 	private Socket outSocket;
-	InetAddress address;
+	private InetAddress address;
 	private Socket inSocket; 
 	public static int inPort = 6970;
-	static ObjectOutputStream scStream;
-	static ObjectInputStream csStream;
+	private ObjectOutputStream scStream;
+	private ObjectInputStream csStream;
 	private LoginDeets deets;
 
 	public Connection(Socket sock) {
@@ -59,23 +59,25 @@ public class Connection extends Thread {
 			ActionRequest actionRequest;
 			Message message;
 			int wantedIndex;
+			int currIndex;
 			do {
 				actionRequest = (ActionRequest) csStream.readObject();
 				if(actionRequest.getAction() == 1){
-					//call getCurrentMsgNum()
-					//outStream.writeObject(currMsgNum);
-					//outStream.flush();
+					currIndex = mainThread.getCurrentMessageIndex();
+					scStream.writeObject(currIndex);
+					scStream.flush();
 				} else if(actionRequest.getAction() == 2){
 					wantedIndex = actionRequest.getIndex();
-					//message = getMsg(wantedIndex);
-//					sendMsg(message);
+					message = mainThread.getMessage(wantedIndex);
+					sendMsg(message);
 				} else if(actionRequest.getAction() == 3){
 					message = actionRequest.getMessage();
-					//call addMsg();
+					mainThread.addMessage(message);
 				}
 			} while (actionRequest.getAction() != 4);
-			//addMsg(deets.getUserName() + "disconnected");
-			scStream.close();
+			Message disConnectMsg = new Message(deets, "disconnected" );
+			mainThread.addMessage(disConnectMsg);
+			scStream.close(); 
 			
 			
 		} catch (IOException e) {
