@@ -57,6 +57,7 @@ public class Connection extends Thread {
 					currIndex = mainThread.getCurrentMessageIndex();
 					scStream.writeObject(currIndex);
 					scStream.flush();
+					System.out.println(actionRequest.getAction());
 				} else if(actionRequest.getAction() == GETMESSAGE){
 					wantedIndex = actionRequest.getIndex();
 					message = mainThread.getMessage(wantedIndex);
