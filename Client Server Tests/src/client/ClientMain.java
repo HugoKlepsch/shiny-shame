@@ -42,7 +42,8 @@ public class ClientMain {
 		String address = userIn.readLine();
 		LoginDeets creds = new LoginDeets(userName, null);
 		
-		//TODO constructor
+		ServerOutComms outComms = new ServerOutComms(address, creds);
+		outComms.start();
 		
 		System.out.println("Type \"Exit\" to close");
 		String messageContent =  "";

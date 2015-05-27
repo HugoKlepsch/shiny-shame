@@ -21,7 +21,7 @@ import sharedPackages.Message;
  * @author graham
  *
  */
-public class ServerOutComms {
+public class ServerOutComms extends Thread{
 	private static int port = 6969;
 	private Socket socket;
 	private static ObjectOutputStream csStream;
@@ -43,7 +43,8 @@ public class ServerOutComms {
 		csStream.flush();
 	}
 	
-	public void run() throws UnknownHostException, IOException{
+	public void run(){
+		try {
 		socket = new Socket(this.ipAddress, port);
 		csStream = new ObjectOutputStream(socket.getOutputStream());
 		ActionRequest connectRequest = new ActionRequest(CONNECT, new Message(userDeets, null));
@@ -69,6 +70,9 @@ public class ServerOutComms {
 		csStream.writeObject(disconnectRequest);
 		csStream.flush();
 		csStream.close();
+		} catch (IOException e){
+			e.printStackTrace();
+		}
 		
 	}
 
