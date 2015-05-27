@@ -78,8 +78,13 @@ public class mainThread {
 		 * @Description: ( ͡° ͜ʖ ͡°)
 	 */
 	public static void addMessage(Message message) {
-		int prevInd = messages.lastElement().getIndex();
-		message.setIndex(prevInd + 1);
+		if (!messages.isEmpty()) {
+			int prevInd = messages.lastElement().getIndex();
+			message.setIndex(prevInd + 1);
+		} else{
+			message.setIndex(0);
+		}
+		messages.insertElementAt(message, message.getIndex());
 	}
 
 	public static int getCurrentMessageIndex() {
