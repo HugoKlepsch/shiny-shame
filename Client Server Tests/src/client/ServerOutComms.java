@@ -51,7 +51,7 @@ public class ServerOutComms extends Thread{
 		csStream.writeObject(connectRequest);
 		csStream.flush();
 		ActionRequest indexRequest = new ActionRequest(GETCURRENTMESSAGEINDEX);
-		long debugCount 0;
+		long debugCount = 0;
 		while(ClientMain.StayAlive()){
 			System.out.println(debugCount++);
 			csStream.writeObject(indexRequest);
