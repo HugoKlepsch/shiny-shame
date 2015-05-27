@@ -24,6 +24,7 @@ import sharedPackages.Message;
 public class ServerOutComms extends Thread{
 	private static int port = 6969;
 	private Socket socket;
+	public static int loopDelay = 333;
 	private static ObjectOutputStream csStream;
 	private LoginDeets userDeets;
 	private static final int GETCURRENTMESSAGEINDEX = 1;
@@ -51,10 +52,8 @@ public class ServerOutComms extends Thread{
 		csStream.writeObject(connectRequest);
 		csStream.flush();
 		ActionRequest indexRequest = new ActionRequest(GETCURRENTMESSAGEINDEX);
-		long debugCount = 0;
 		while(ClientMain.StayAlive()){
-			System.out.println(debugCount++);
-			Thread.sleep(1);
+			Thread.sleep(loopDelay);
 			csStream.writeObject(indexRequest);
 			csStream.flush();
 			if(ClientMain.isUpToDate()){
