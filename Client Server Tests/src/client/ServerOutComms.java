@@ -54,6 +54,7 @@ public class ServerOutComms extends Thread{
 		long debugCount = 0;
 		while(ClientMain.StayAlive()){
 			System.out.println(debugCount++);
+			Thread.sleep(250);
 			csStream.writeObject(indexRequest);
 			csStream.flush();
 			if(ClientMain.isUpToDate()){
@@ -73,6 +74,9 @@ public class ServerOutComms extends Thread{
 		csStream.flush();
 		csStream.close();
 		} catch (IOException e){
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
