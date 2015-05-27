@@ -32,11 +32,15 @@ public class ServerOutComms {
 	private static final int DISCONNECT = 4;
 	private static final int CONNECT = 5;
 	private String ipAddress;
-	private int localIndex;
 	
 	public ServerOutComms(String ipAddress, LoginDeets userDeets){
 		this.ipAddress = ipAddress;
 		this.userDeets = userDeets;
+	}
+	
+	private void sendMsg(Message message) throws IOException{
+		csStream.writeObject(message);
+		csStream.flush();
 	}
 	
 	public void run() throws UnknownHostException, IOException{
@@ -49,6 +53,11 @@ public class ServerOutComms {
 			ActionRequest indexRequest = new ActionRequest(GETCURRENTMESSAGEINDEX);
 			csStream.writeObject(indexRequest);
 			csStream.flush();
+			if(ClientMain.isUpToDate()){
+				if(!ClientMain.messageQueue.isEmpty()){
+					sendMsg(ClientMain.messageQueue.poll());
+				}
+			}
 		}
 		ActionRequest disconnectRequest = new ActionRequest(DISCONNECT);
 		csStream.writeObject(disconnectRequest);
