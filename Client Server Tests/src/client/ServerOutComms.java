@@ -56,7 +56,7 @@ public class ServerOutComms extends Thread{
 			csStream.flush();
 			if(ClientMain.isUpToDate()){
 				if(!ClientMain.messageQueue.isEmpty()){
-					sendMsg(ClientMain.messageQueue.poll());
+					sendMsg(ClientMain.messageQueue.deQueue());
 				}
 			} else{
 				for(int i = ClientMain.getLocalIndex() + 1; i<ClientMain.getRemoteIndex();i++){
