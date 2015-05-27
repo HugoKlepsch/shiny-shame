@@ -24,9 +24,6 @@ import sharedPackages.Message;
  */
 public class Connection extends Thread {
 	private Socket outSocket;
-	private InetAddress address;
-	private Socket inSocket; 
-	public static int inPort = 6970;
 	private ObjectOutputStream scStream;
 	private ObjectInputStream csStream;
 	private LoginDeets userDeets;
@@ -50,9 +47,7 @@ public class Connection extends Thread {
 	public void run(){
 		try {
 			scStream = new ObjectOutputStream(outSocket.getOutputStream());
-			address = outSocket.getInetAddress();
-			inSocket = new Socket(address, inPort);
-			csStream = new ObjectInputStream(inSocket.getInputStream());
+			csStream = new ObjectInputStream(outSocket.getInputStream());
 			ActionRequest actionRequest;
 			Message message;
 			int wantedIndex;
