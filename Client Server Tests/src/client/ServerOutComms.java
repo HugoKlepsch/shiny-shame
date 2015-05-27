@@ -36,7 +36,7 @@ public class ServerOutComms extends Thread{
 	}
 	
 	private void sendMsg(Message message) throws IOException{
-		csStream.writeObject(new ActionRequest(ActionTypes.SENDMESSAGE, message));
+		csStream.writeObject(new ActionRequest(ActionTypes.CSSENDMESSAGE, message));
 		csStream.flush();
 	}
 	
@@ -44,10 +44,10 @@ public class ServerOutComms extends Thread{
 		try {
 		socket = new Socket(this.ipAddress, port);
 		csStream = new ObjectOutputStream(socket.getOutputStream());
-		ActionRequest connectRequest = new ActionRequest(ActionTypes.CONNECT, new Message(userDeets, null));
+		ActionRequest connectRequest = new ActionRequest(ActionTypes.CSCONNECT, new Message(userDeets, null));
 		csStream.writeObject(connectRequest);
 		csStream.flush();
-		ActionRequest indexRequest = new ActionRequest(ActionTypes.GETCURRENTMESSAGEINDEX);
+		ActionRequest indexRequest = new ActionRequest(ActionTypes.CSGETCURRENTMESSAGEINDEX);
 		while(ClientMain.StayAlive()){
 			Thread.sleep(loopDelay);
 			csStream.writeObject(indexRequest);
@@ -58,13 +58,13 @@ public class ServerOutComms extends Thread{
 				}
 			} else{
 				for(int i = ClientMain.getLocalIndex() + 1; i<ClientMain.getRemoteIndex()+1;i++){
-					ActionRequest getMsgRequest = new ActionRequest(ActionTypes.GETMESSAGE, i);
+					ActionRequest getMsgRequest = new ActionRequest(ActionTypes.CSGETMESSAGE, i);
 					csStream.writeObject(getMsgRequest);
 					csStream.flush();
 				}
 			}
 		}
-		ActionRequest disconnectRequest = new ActionRequest(ActionTypes.DISCONNECT);
+		ActionRequest disconnectRequest = new ActionRequest(ActionTypes.CSDISCONNECT);
 		csStream.writeObject(disconnectRequest);
 		csStream.flush();
 		Thread.sleep(400);

@@ -33,9 +33,9 @@ public class ServerInComms extends Thread{
 			scStream = new ObjectInputStream(scSocket.getInputStream());
 			while(ClientMain.StayAlive()){
 				actionRequest = (ActionRequest) scStream.readObject();
-				if(actionRequest.getAction() == ActionTypes.SENDCURRENTMESSAGEINDEX){
+				if(actionRequest.getAction() == ActionTypes.SCSENDCURRENTMESSAGEINDEX){
 					ClientMain.setRemoteIndex(actionRequest.getIndex());
-				} else if (actionRequest.getAction() == ActionTypes.RECIEVEMESSAGE) {
+				} else if (actionRequest.getAction() == ActionTypes.SCSENDMESSAGE) {
 					ClientMain.addMessage(actionRequest.getMessage());
 				}
 			}

@@ -35,7 +35,7 @@ public class Connection extends Thread {
 	
 	
 	private void sendMsg(Message message) throws IOException{
-		ActionRequest sendMsgRequest = new ActionRequest(ActionTypes.RECIEVEMESSAGE, message);
+		ActionRequest sendMsgRequest = new ActionRequest(ActionTypes.SCSENDMESSAGE, message);
 		scStream.writeObject(sendMsgRequest);
 		scStream.flush();
 	}
@@ -50,27 +50,27 @@ public class Connection extends Thread {
 			int currIndex;
 			do {
 				actionRequest = (ActionRequest) csStream.readObject();
-				if(actionRequest.getAction() == ActionTypes.GETCURRENTMESSAGEINDEX){
+				if(actionRequest.getAction() == ActionTypes.CSGETCURRENTMESSAGEINDEX){
 					currIndex = mainThread.getCurrentMessageIndex();
-					ActionRequest sendIndexRequest = new ActionRequest(ActionTypes.SENDCURRENTMESSAGEINDEX, currIndex);
+					ActionRequest sendIndexRequest = new ActionRequest(ActionTypes.SCSENDCURRENTMESSAGEINDEX, currIndex);
 					scStream.writeObject(sendIndexRequest);
 					scStream.flush();
 					
-				} else if(actionRequest.getAction() == ActionTypes.GETMESSAGE){
+				} else if(actionRequest.getAction() == ActionTypes.CSGETMESSAGE){
 					wantedIndex = actionRequest.getIndex();
 					message = mainThread.getMessage(wantedIndex);
 					sendMsg(message);
-				} else if(actionRequest.getAction() == ActionTypes.SENDMESSAGE){
+				} else if(actionRequest.getAction() == ActionTypes.CSSENDMESSAGE){
 					message = actionRequest.getMessage();
 					mainThread.addMessage(message);
-				} else if(actionRequest.getAction() == ActionTypes.CONNECT){
+				} else if(actionRequest.getAction() == ActionTypes.CSCONNECT){
 					 userDeets = actionRequest.getMessage().getCredentials();
 					 String msg = userDeets.getUserName() + " connected";
 					 Message connectMsg = new Message(rootDeets, msg);
 					 mainThread.addMessage(connectMsg);
 				}
 				System.out.println(userDeets.getUserName() + " " + actionRequest.getAction());
-			} while (actionRequest.getAction() != ActionTypes.DISCONNECT);
+			} while (actionRequest.getAction() != ActionTypes.CSDISCONNECT);
 			String msg = userDeets.getUserName() + " disconnected";
 			Message disConnectMsg = new Message(rootDeets, msg);
 			mainThread.addMessage(disConnectMsg);
