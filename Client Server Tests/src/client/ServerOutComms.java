@@ -20,7 +20,7 @@ import sharedPackages.LoginDeets;
  * @author graham
  *
  */
-public class ServerComms {
+public class ServerOutComms {
 	private static int port = 6969;
 	private Socket socket;
 	private static ObjectInputStream scStream;
@@ -34,7 +34,7 @@ public class ServerComms {
 	private String ipAddress;
 	private int localIndex;
 	
-	public ServerComms(String ipAddress, LoginDeets userDeets){
+	public ServerOutComms(String ipAddress, LoginDeets userDeets){
 		this.ipAddress = ipAddress;
 		this.userDeets = userDeets;
 	}
