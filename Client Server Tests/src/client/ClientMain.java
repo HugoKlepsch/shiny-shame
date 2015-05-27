@@ -37,6 +37,14 @@ public class ClientMain {
 		
 		//TODO constructor
 		
+		System.out.println("Type \"Exit\" to close");
+		String message =  "";
+		while(!(message.equals("Exit"))){
+			message = userIn.readLine();
+			if (!(message.equals("Exit"))) {
+				
+			}
+		}
 	
 	}
 
