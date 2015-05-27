@@ -8,10 +8,16 @@
 
 package client;
 
+import java.net.Socket;
+
 /**
  * @author hugo
  *
  */
 public class ServerInComms {
-
+	
+	
+	public ServerInComms(Socket socket){
+		
+	}
 }
