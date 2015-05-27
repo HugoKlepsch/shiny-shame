@@ -35,7 +35,8 @@ public class Connection extends Thread {
 	
 	
 	private void sendMsg(Message message) throws IOException{
-		scStream.writeObject(message);
+		ActionRequest sendMsgRequest = new ActionRequest(ActionTypes.RECIEVEMESSAGE, message);
+		scStream.writeObject(sendMsgRequest);
 		scStream.flush();
 	}
 	
@@ -51,7 +52,8 @@ public class Connection extends Thread {
 				actionRequest = (ActionRequest) csStream.readObject();
 				if(actionRequest.getAction() == ActionTypes.GETCURRENTMESSAGEINDEX){
 					currIndex = mainThread.getCurrentMessageIndex();
-					scStream.writeObject(currIndex);
+					ActionRequest sendIndexRequest = new ActionRequest(ActionTypes.SENDCURRENTMESSAGEINDEX, currIndex);
+					scStream.writeObject(sendIndexRequest);
 					scStream.flush();
 					
 				} else if(actionRequest.getAction() == ActionTypes.GETMESSAGE){
