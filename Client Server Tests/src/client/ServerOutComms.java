@@ -57,7 +57,7 @@ public class ServerOutComms extends Thread{
 					sendMsg(ClientMain.messageQueue.deQueue());
 				}
 			} else{
-				for(int i = ClientMain.getLocalIndex() + 1; i<ClientMain.getRemoteIndex();i++){
+				for(int i = ClientMain.getLocalIndex() + 1; i<ClientMain.getRemoteIndex()+1;i++){
 					ActionRequest getMsgRequest = new ActionRequest(ActionTypes.GETMESSAGE, i);
 					csStream.writeObject(getMsgRequest);
 					csStream.flush();
