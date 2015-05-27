@@ -1,6 +1,12 @@
 package sharedPackages;
 
-public class ActionRequest {
+import java.io.Serializable;
+
+public class ActionRequest implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int action;
 	private Message message;
 	private int index;

@@ -8,11 +8,17 @@
 
 package sharedPackages;
 
+import java.io.Serializable;
+
 /**
  * @author hugo
  *
  */
-public class LoginDeets {
+public class LoginDeets implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String userName;
     String password;
     public LoginDeets(String userName, String password){
