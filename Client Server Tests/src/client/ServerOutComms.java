@@ -57,6 +57,12 @@ public class ServerOutComms {
 				if(!ClientMain.messageQueue.isEmpty()){
 					sendMsg(ClientMain.messageQueue.poll());
 				}
+			} else{
+				for(int i = ClientMain.getLocalIndex() + 1; i<ClientMain.getRemoteIndex();i++){
+					ActionRequest getMsgRequest = new ActionRequest(GETMESSAGE, i);
+					csStream.writeObject(getMsgRequest);
+					csStream.flush();
+				}
 			}
 		}
 		ActionRequest disconnectRequest = new ActionRequest(DISCONNECT);
