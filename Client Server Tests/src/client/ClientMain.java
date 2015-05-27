@@ -11,10 +11,13 @@ package client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Queue;
 
 import sharedPackages.LoginDeets;
 import sharedPackages.Message;
+import sharedPackages.Queuer;
 
 /**
  * @author hugo
@@ -25,7 +28,7 @@ public class ClientMain {
 	private static int localIndex = 0;
 	private static int remoteIndex = 0;
 	private static boolean stayAlive = true;
-	public static Queue<Message> messageQueue; 
+	public static Queuer<Message> messageQueue;
 	
 	/**
 		 * @author hugo
@@ -36,6 +39,7 @@ public class ClientMain {
 		 * @Description: ( ͡° ͜ʖ ͡°)
 		 */
 	public static void main(String[] args) throws IOException {
+		messageQueue = new Queuer<Message>();
 		System.out.println("Enter username to connect as: ");
 		String userName = userIn.readLine();
 		System.out.println("Enter the IP address to connect to: ");
@@ -52,7 +56,7 @@ public class ClientMain {
 			messageContent = userIn.readLine();
 			message = new Message(creds, messageContent);
 			if (!(messageContent.equals("Exit"))) {
-				messageQueue.add(message);
+				messageQueue.enQueue(message); 
 			} else {
 				setAlive(false);
 			}
