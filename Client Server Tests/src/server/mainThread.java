@@ -49,6 +49,7 @@ public class mainThread {
 			for (int i = 0; i < connections.size(); i++) {
 				if (!connections.get(i).isAlive()) { // if the connection closes
 					connections.remove(i); // remove it from our list
+					System.out.println("removed connection number: " + i);
 					break; // to avoid index errors after removing an index
 				}
 			}
