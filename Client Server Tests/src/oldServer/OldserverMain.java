@@ -20,7 +20,7 @@ import java.util.Vector;
  * @author hugo
  *
  */
-public class serverMain {
+public class OldserverMain {
 	public static int outPort = 6969;
 	
 	public static Vector<ServerThread> connectionArray;

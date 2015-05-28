@@ -15,7 +15,7 @@ import java.io.*;
  * @author hugo
  *
  */
-public class clientMain {
+public class OldclientMain {
 	private static int inPort = 6969;
 	private static int outPort = 6970;
 	static ServerSocket serverSocket;
