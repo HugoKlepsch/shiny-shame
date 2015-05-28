@@ -44,6 +44,8 @@ public class ServerOutComms extends Thread{
 		try {
 		socket = new Socket(this.ipAddress, port);
 		csStream = new ObjectOutputStream(socket.getOutputStream());
+		ServerInComms inComms = new ServerInComms(socket);
+		inComms.start();
 		ActionRequest connectRequest = new ActionRequest(ActionTypes.CSCONNECT, new Message(userDeets, null));
 		csStream.writeObject(connectRequest);
 		csStream.flush();
