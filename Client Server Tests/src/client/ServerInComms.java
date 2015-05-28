@@ -34,7 +34,17 @@ public class ServerInComms extends Thread{
 			while(ClientMain.StayAlive()){
 				actionRequest = (ActionRequest) scStream.readObject();
 				if(actionRequest.getAction() == ActionTypes.SCSENDCURRENTMESSAGEINDEX){
+					
+					
 					ClientMain.setRemoteIndex(actionRequest.getIndex());
+					int difference = ClientMain.getRemoteIndex() - ClientMain.getLocalIndexLength();
+					if(difference != 0){
+						for (int i = 0; i < difference; i++) {
+							ClientMain.localIndexAddIndex();
+						}
+					}
+					
+					
 				} else if (actionRequest.getAction() == ActionTypes.SCSENDMESSAGE) {
 					if(ClientMain.hasMessage(actionRequest.getMessage().getIndex())){ //if we already have the message, 
 						//do nothing

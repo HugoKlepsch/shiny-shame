@@ -69,12 +69,26 @@ public class ClientMain {
 	}
 	
 	/**
-	 * @return the localIndex
+	 * @return true if we have the message at that index
 	 */
 	public static boolean hasMessage(int index) {
 		return ClientMain.localIndex.get(index);
 	}
 
+	/**
+	 * @return the length of the local message array
+	 */
+	public static int getLocalIndexLength(){
+		return ClientMain.localIndex.size();
+	}
+	
+	/**
+	 * @descrip adds an index to the localIndex array, with status false
+	 */
+	public static void localIndexAddIndex(){
+		localIndex.addElement(false);
+	}
+	
 	/**
 	 * @param localIndex the localIndex to set
 	 */
