@@ -52,6 +52,7 @@ public class ServerOutComms extends Thread{
 			Thread.sleep(loopDelay);
 			csStream.writeObject(indexRequest);
 			csStream.flush();
+			System.out.println("LocalIndex: " + ClientMain.getLocalIndex() + "\nRemoteIndex: " + ClientMain.getRemoteIndex());
 			if(ClientMain.isUpToDate()){
 				if(!ClientMain.messageQueue.isEmpty()){
 					sendMsg(ClientMain.messageQueue.deQueue());
