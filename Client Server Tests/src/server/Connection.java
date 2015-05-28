@@ -50,6 +50,7 @@ public class Connection extends Thread {
 				actionRequest = (ActionRequest) csStream.readObject();
 				if (actionRequest.getAction() == ActionTypes.CSGETCURRENTMESSAGEINDEX) {
 					currIndex = mainThread.getCurrentMessageIndex();
+					System.out.println("Index to send to client: " + currIndex);
 					ActionRequest sendIndexRequest = new ActionRequest(ActionTypes.SCSENDCURRENTMESSAGEINDEX, currIndex);
 					scStream.writeObject(sendIndexRequest);
 					scStream.flush();
