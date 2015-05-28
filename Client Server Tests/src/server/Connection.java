@@ -56,12 +56,12 @@ public class Connection extends Thread {
 					scStream.flush();
 
 				} else if (actionRequest.getAction() == ActionTypes.CSGETMESSAGE) {
-					System.out.println(userDeets.getUserName() + " " + actionRequest.getAction());
+					System.out.println(userDeets.getUserName() + " wants message #" + actionRequest.getIndex());
 					wantedIndex = actionRequest.getIndex();
 					message = mainThread.getMessage(wantedIndex);
 					sendMsg(message);
 				} else if (actionRequest.getAction() == ActionTypes.CSSENDMESSAGE) {
-					System.out.println(userDeets.getUserName() + " " + actionRequest.getAction());
+					System.out.println("Sending message to: " + userDeets.getUserName() + " with message #" + actionRequest.getMessage().getIndex());
 					message = actionRequest.getMessage();
 					mainThread.addMessage(message);
 				} else if (actionRequest.getAction() == ActionTypes.CSCONNECT) {
