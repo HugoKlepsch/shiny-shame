@@ -11,7 +11,7 @@ package client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+import java.util.Vector;
 
 import sharedPackages.LoginDeets;
 import sharedPackages.Message;
@@ -23,7 +23,8 @@ import sharedPackages.Queuer;
  */
 public class ClientMain {
 	private static BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
-	private static int localIndex = 0;
+//	private static int localIndex = 0;
+	private static Vector<Boolean> localIndex;
 	private static int remoteIndex = 0;
 	private static boolean stayAlive = true;
 	public static Queuer<Message> messageQueue;
@@ -38,6 +39,7 @@ public class ClientMain {
 		 */
 	public static void main(String[] args) throws IOException {
 		messageQueue = new Queuer<Message>();
+		localIndex = new Vector<Boolean>();
 		System.out.println("Enter username to connect as: ");
 		String userName = userIn.readLine();
 		System.out.println("Enter the IP address to connect to: ");
@@ -69,15 +71,15 @@ public class ClientMain {
 	/**
 	 * @return the localIndex
 	 */
-	public static int getLocalIndex() {
-		return localIndex;
+	public static boolean hasMessage(int index) {
+		return ClientMain.localIndex.get(index);
 	}
 
 	/**
 	 * @param localIndex the localIndex to set
 	 */
-	public static void setLocalIndex(int localIndex) {
-		ClientMain.localIndex = localIndex;
+	public static void setLocalIndex(int index, boolean value) {
+		ClientMain.localIndex.set(index, value);
 	}
 	
 	/**
@@ -95,8 +97,14 @@ public class ClientMain {
 //		System.out.println("Updated remoteindex to : " + ClientMain.remoteIndex);
 	}
 	
-	public static boolean isUpToDate(){
-		return (localIndex == remoteIndex ? true : false);
+	public static Vector<Integer> getMissingIndices(){
+		Vector<Integer> missingIndices = new Vector<Integer>();
+		for (int i = 0; i < localIndex.size(); i++) {
+			if(!localIndex.get(i)){
+				missingIndices.add(i);
+			}
+		}
+		return missingIndices;
 	}
 
 	/**

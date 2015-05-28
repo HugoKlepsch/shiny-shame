@@ -36,8 +36,14 @@ public class ServerInComms extends Thread{
 				if(actionRequest.getAction() == ActionTypes.SCSENDCURRENTMESSAGEINDEX){
 					ClientMain.setRemoteIndex(actionRequest.getIndex());
 				} else if (actionRequest.getAction() == ActionTypes.SCSENDMESSAGE) {
-					ClientMain.addMessage(actionRequest.getMessage());
-					ClientMain.setLocalIndex(actionRequest.getMessage().getIndex());
+					if(ClientMain.hasMessage(actionRequest.getMessage().getIndex())){ //if we already have the message, 
+						//do nothing
+					} else { //if we do not
+						ClientMain.setLocalIndex(actionRequest.getMessage().getIndex(), true);
+						ClientMain.addMessage(actionRequest.getMessage());
+					}
+					
+					
 				}
 			}
 		} catch (IOException e) {

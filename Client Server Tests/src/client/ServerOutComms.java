@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Vector;
 
 import sharedPackages.ActionRequest;
 import sharedPackages.LoginDeets;
@@ -55,13 +56,14 @@ public class ServerOutComms extends Thread{
 			csStream.writeObject(indexRequest);
 			csStream.flush();
 //			System.out.println("LocalIndex: " + ClientMain.getLocalIndex() + "RemoteIndex: " + ClientMain.getRemoteIndex());
-			if(ClientMain.isUpToDate()){
+			Vector<Integer> missingIndices = ClientMain.getMissingIndices();
+			if(missingIndices.size() == 0){ //if we're up to date
 				if(!ClientMain.messageQueue.isEmpty()){
 					sendMsg(ClientMain.messageQueue.deQueue());
 				}
 			} else {
-				for(int i = ClientMain.getLocalIndex() + 1; i<ClientMain.getRemoteIndex()+1;i++){
-					ActionRequest getMsgRequest = new ActionRequest(ActionTypes.CSGETMESSAGE, i);
+				for(int i = 0; i < missingIndices.size(); i++){
+					ActionRequest getMsgRequest = new ActionRequest(ActionTypes.CSGETMESSAGE, missingIndices.get(i));
 					csStream.writeObject(getMsgRequest);
 					csStream.flush();
 				}
