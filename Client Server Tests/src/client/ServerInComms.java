@@ -39,6 +39,7 @@ public class ServerInComms extends Thread{
 				} else if (actionRequest.getAction() == ActionTypes.SCSENDMESSAGE) {
 					ClientMain.addMessage(actionRequest.getMessage());
 				}
+				System.out.println(actionRequest.getAction());
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
