@@ -34,6 +34,7 @@ public class Connection extends Thread {
 
 	private void sendMsg(Message message) throws IOException {
 		ActionRequest sendMsgRequest = new ActionRequest(ActionTypes.SCSENDMESSAGE, message);
+		System.out.println("Sending message to: " + userDeets.getUserName() + " with message #" + sendMsgRequest.getMessage().getIndex());
 		scStream.writeObject(sendMsgRequest);
 		scStream.flush();
 	}
@@ -59,9 +60,9 @@ public class Connection extends Thread {
 					System.out.println(userDeets.getUserName() + " wants message #" + actionRequest.getIndex());
 					wantedIndex = actionRequest.getIndex();
 					message = mainThread.getMessage(wantedIndex);
+					
 					sendMsg(message);
 				} else if (actionRequest.getAction() == ActionTypes.CSSENDMESSAGE) {
-					System.out.println("Sending message to: " + userDeets.getUserName() + " with message #" + actionRequest.getMessage().getIndex());
 					message = actionRequest.getMessage();
 					mainThread.addMessage(message);
 				} else if (actionRequest.getAction() == ActionTypes.CSCONNECT) {
