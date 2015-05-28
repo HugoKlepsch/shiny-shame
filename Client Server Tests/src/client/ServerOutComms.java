@@ -25,7 +25,7 @@ import sharedPackages.ActionTypes;
 public class ServerOutComms extends Thread{
 	private static int port = 6969;
 	private Socket socket;
-	public static int loopDelay = 333;
+	public static int loopDelay = 100;
 	private static ObjectOutputStream csStream;
 	private LoginDeets userDeets;
 	private String ipAddress;
