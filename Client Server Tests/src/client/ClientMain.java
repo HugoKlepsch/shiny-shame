@@ -92,7 +92,7 @@ public class ClientMain {
 	 */
 	public static void setRemoteIndex(int remoteIndex) {
 		ClientMain.remoteIndex = remoteIndex;
-		System.out.println("Updated remoteindex to : " + ClientMain.remoteIndex);
+//		System.out.println("Updated remoteindex to : " + ClientMain.remoteIndex);
 	}
 	
 	public static boolean isUpToDate(){

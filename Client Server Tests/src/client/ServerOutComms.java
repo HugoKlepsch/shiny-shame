@@ -54,13 +54,12 @@ public class ServerOutComms extends Thread{
 			Thread.sleep(loopDelay);
 			csStream.writeObject(indexRequest);
 			csStream.flush();
-			System.out.println("LocalIndex: " + ClientMain.getLocalIndex() + "\nRemoteIndex: " + ClientMain.getRemoteIndex());
+//			System.out.println("LocalIndex: " + ClientMain.getLocalIndex() + "RemoteIndex: " + ClientMain.getRemoteIndex());
 			if(ClientMain.isUpToDate()){
 				if(!ClientMain.messageQueue.isEmpty()){
 					sendMsg(ClientMain.messageQueue.deQueue());
 				}
 			} else {
-				System.out.println("ClientMain.isuptodate is false. ");
 				for(int i = ClientMain.getLocalIndex() + 1; i<ClientMain.getRemoteIndex()+1;i++){
 					ActionRequest getMsgRequest = new ActionRequest(ActionTypes.CSGETMESSAGE, i);
 					csStream.writeObject(getMsgRequest);

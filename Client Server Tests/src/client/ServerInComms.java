@@ -34,12 +34,10 @@ public class ServerInComms extends Thread{
 			while(ClientMain.StayAlive()){
 				actionRequest = (ActionRequest) scStream.readObject();
 				if(actionRequest.getAction() == ActionTypes.SCSENDCURRENTMESSAGEINDEX){
-					System.out.println("RemoteIndex: " + actionRequest.getIndex());
 					ClientMain.setRemoteIndex(actionRequest.getIndex());
 				} else if (actionRequest.getAction() == ActionTypes.SCSENDMESSAGE) {
 					ClientMain.addMessage(actionRequest.getMessage());
 				}
-				System.out.println("ServerInComms recieving: " + actionRequest.getAction());
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
