@@ -6,3 +6,6 @@ server:
 
 client: 
 	jar cf bin/client.jar client/*.java sharedPackages/*.java
+
+#this does not work lol 
+#don't feel like making it work
