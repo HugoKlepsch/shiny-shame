@@ -40,7 +40,6 @@ public class ServerInComms extends Thread{
 					int difference = ClientMain.getRemoteIndex() + 1 - ClientMain.getLocalIndexLength();
 					if(difference != 0){
 						for (int i = 0; i < difference; i++) {
-							System.out.println("Inside diff for loop, i = " + i + " difference: " + difference + "remoteVer: " + actionRequest.getIndex());
 							ClientMain.localIndexAddIndex();
 						}
 					}
@@ -58,10 +57,8 @@ public class ServerInComms extends Thread{
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

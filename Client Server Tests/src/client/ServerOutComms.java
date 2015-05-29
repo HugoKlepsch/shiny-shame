@@ -55,19 +55,6 @@ public class ServerOutComms extends Thread{
 			Thread.sleep(loopDelay);
 			csStream.writeObject(indexRequest);
 			csStream.flush();
-//			System.out.println("LocalIndex: " + ClientMain.getLocalIndex() + "RemoteIndex: " + ClientMain.getRemoteIndex());
-//			Vector<Integer> missingIndices = ClientMain.getMissingIndices();
-//			if(missingIndices.size() == 0){ //if we're up to date
-//				if(!ClientMain.messageQueue.isEmpty()){
-//					sendMsg(ClientMain.messageQueue.deQueue());
-//				}
-//			} else {
-//				for(int i = 0; i < missingIndices.size(); i++){
-//					ActionRequest getMsgRequest = new ActionRequest(ActionTypes.CSGETMESSAGE, missingIndices.get(i));
-//					csStream.writeObject(getMsgRequest);
-//					csStream.flush();
-//				}
-//			}
 			for (int i = 0; i < ClientMain.getLocalIndexLength(); i++) {
 				if (!ClientMain.hasMessage(i)) { //if the value stored = false, (we don't have it) 
 					ActionRequest getMsgRequest = new ActionRequest(ActionTypes.CSGETMESSAGE, i);
@@ -88,7 +75,6 @@ public class ServerOutComms extends Thread{
 		} catch (IOException e){
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
