@@ -56,7 +56,7 @@ public class ServerOutComms extends Thread{
 			csStream.writeObject(indexRequest);
 			csStream.flush();
 //			System.out.println("LocalIndex: " + ClientMain.getLocalIndex() + "RemoteIndex: " + ClientMain.getRemoteIndex());
-			Vector<Integer> missingIndices = ClientMain.getMissingIndices();
+//			Vector<Integer> missingIndices = ClientMain.getMissingIndices();
 //			if(missingIndices.size() == 0){ //if we're up to date
 //				if(!ClientMain.messageQueue.isEmpty()){
 //					sendMsg(ClientMain.messageQueue.deQueue());
