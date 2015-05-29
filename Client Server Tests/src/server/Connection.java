@@ -63,6 +63,7 @@ public class Connection extends Thread {
 					
 					sendMsg(message);
 				} else if (actionRequest.getAction() == ActionTypes.CSSENDMESSAGE) {
+					System.out.println(userDeets.getUserName() + "sent message" + actionRequest.getMessage().getMessage());
 					message = actionRequest.getMessage();
 					mainThread.addMessage(message);
 				} else if (actionRequest.getAction() == ActionTypes.CSCONNECT) {

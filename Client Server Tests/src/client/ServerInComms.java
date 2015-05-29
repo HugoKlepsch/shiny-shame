@@ -37,11 +37,10 @@ public class ServerInComms extends Thread{
 					
 					
 					ClientMain.setRemoteIndex(actionRequest.getIndex());
-					int difference = ClientMain.getRemoteIndex() - ClientMain.getLocalIndexLength();
+					int difference = ClientMain.getRemoteIndex() + 1 - ClientMain.getLocalIndexLength();
 					if(difference != 0){
 						for (int i = 0; i < difference; i++) {
-							System.out.println("Inside diff for loop, i = " + i);
-							System.out.println("Inside diff for loop, diff = " + difference);
+							System.out.println("Inside diff for loop, i = " + i + " difference: " + difference + "remoteVer: " + actionRequest.getIndex());
 							ClientMain.localIndexAddIndex();
 						}
 					}
