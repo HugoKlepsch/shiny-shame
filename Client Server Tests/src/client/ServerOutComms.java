@@ -11,9 +11,6 @@ package client;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.Vector;
-
 import sharedPackages.ActionRequest;
 import sharedPackages.LoginDeets;
 import sharedPackages.Message;
