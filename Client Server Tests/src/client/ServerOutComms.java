@@ -68,7 +68,7 @@ public class ServerOutComms extends Thread{
 //					csStream.flush();
 //				}
 //			}
-			for (int i = 0; i <= ClientMain.getLocalIndexLength(); i++) {
+			for (int i = 0; i < ClientMain.getLocalIndexLength(); i++) {
 				if (!ClientMain.hasMessage(i)) { //if the value stored = false, (we don't have it) 
 					ActionRequest getMsgRequest = new ActionRequest(ActionTypes.CSGETMESSAGE, i);
 					csStream.writeObject(getMsgRequest);
