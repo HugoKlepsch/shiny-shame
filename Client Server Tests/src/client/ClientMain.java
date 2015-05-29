@@ -23,7 +23,6 @@ import sharedPackages.Queuer;
  */
 public class ClientMain {
 	private static BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
-//	private static int localIndex = 0;
 	private static Vector<Boolean> localIndex;
 	private static int remoteIndex = 0;
 	private static boolean stayAlive = true;
