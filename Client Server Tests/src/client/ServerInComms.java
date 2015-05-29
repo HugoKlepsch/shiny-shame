@@ -40,6 +40,7 @@ public class ServerInComms extends Thread{
 					int difference = ClientMain.getRemoteIndex() - ClientMain.getLocalIndexLength();
 					if(difference != 0){
 						for (int i = 0; i < difference; i++) {
+							System.out.println("Inside diff for loop, i = " + i);
 							ClientMain.localIndexAddIndex();
 						}
 					}
