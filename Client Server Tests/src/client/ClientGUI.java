@@ -51,8 +51,10 @@ public class ClientGUI {
 		root = new JFrame("SquadMessenger");
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension dm = tk.getScreenSize();
-		root.setBounds(0, 0, (int) (dm.width / 1.2), (int) (dm.height / 1.9));
-		mainPanel = new JPanel(new GridLayout(0,1));
+		double defaultWidth = dm.width / 1.2;
+		double defaultHeight = dm.height / 1.9;
+		root.setBounds(0, 0, (int) (defaultWidth), (int) (defaultHeight));
+		mainPanel = new JPanel(new GridLayout(0,1, 5, 5));
 		
 		messageLabel = new JLabel("Messages");
 		messageLabel.setFont(defaultFont);
@@ -61,6 +63,8 @@ public class ClientGUI {
 		entry = new JTextField();
 		entry.setFont(defaultFont);
 		entry.addActionListener(onClick);
+		Dimension entryDim = new Dimension((int) defaultWidth, (int) (defaultHeight /20));
+		entry.setSize(entryDim);
 		
 		root.add(mainPanel);
 		mainPanel.add(messageLabel);
