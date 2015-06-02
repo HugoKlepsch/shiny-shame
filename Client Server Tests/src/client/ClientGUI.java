@@ -7,12 +7,13 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.DefaultCaret;
 
 import sharedPackages.Message;
 
@@ -21,6 +22,7 @@ public class ClientGUI {
 	private static JPanel mainPanel;
 	private static JTextArea messageArea;
 	private static JTextField entry;
+	private static JScrollPane scrollPane;
 	private static JLabel messageLabel;
 	private static ButtonHandler onClick = new ButtonHandler();
 	public static Font defaultFont = new Font("Ubuntu", 1, 13);
@@ -60,6 +62,10 @@ public class ClientGUI {
 		messageLabel.setFont(defaultFont);
 		messageArea = new JTextArea();
 		messageArea.setFont(defaultFont);
+		messageArea.setEditable(false);
+		DefaultCaret caret = (DefaultCaret)messageArea.getCaret();
+		 caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		scrollPane = new JScrollPane(messageArea);
 		entry = new JTextField();
 		entry.setFont(defaultFont);
 		entry.addActionListener(onClick);
@@ -68,7 +74,8 @@ public class ClientGUI {
 		
 		root.add(mainPanel);
 		mainPanel.add(messageLabel);
-		mainPanel.add(messageArea);
+		mainPanel.add(scrollPane);
+//		mainPanel.add(messageArea);
 		mainPanel.add(entry);
 		
 		ServerOutComms outComms = new ServerOutComms(ipAddress, ClientMain.getCreds());
