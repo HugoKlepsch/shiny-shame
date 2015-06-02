@@ -51,6 +51,7 @@ public class LoginGUI {
 	
 	public LoginGUI(){
 		root = new JFrame("Login");
+		root.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension dm = tk.getScreenSize();
 		root.setBounds(0, 0, (int) (dm.width / 1.2), (int) (dm.height / 1.9));

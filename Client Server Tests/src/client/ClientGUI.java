@@ -2,6 +2,8 @@ package client;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -49,13 +51,23 @@ public class ClientGUI {
 	}
 	
 	public ClientGUI(String ipAddress) {
+		boolean shouldFill = true;
+		
 		root = new JFrame("SquadMessenger");
+		root.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension dm = tk.getScreenSize();
 		double defaultWidth = dm.width / 1.2;
 		double defaultHeight = dm.height / 1.9;
 		root.setBounds(0, 0, (int) (defaultWidth), (int) (defaultHeight));
-		mainPanel = new JPanel(new GridLayout(0,1, 5, 5));
+		mainPanel = new JPanel();
+		root.add(mainPanel);
+		mainPanel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		if(shouldFill){
+			c.fill = GridBagConstraints.HORIZONTAL;
+		}
+		
 		
 		messageArea = new JTextArea();
 		messageArea.setFont(defaultFont);
@@ -63,17 +75,27 @@ public class ClientGUI {
 		DefaultCaret caret = (DefaultCaret)messageArea.getCaret();
 		 caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		scrollPane = new JScrollPane(messageArea);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 10;
+		c.weighty = 100;
+		c.ipady = 300;
+		mainPanel.add(scrollPane, c);
+		
+		
 		entry = new JTextField();
 		entry.setFont(defaultFont);
 		entry.addActionListener(onClick);
-		Dimension entryDim = new Dimension((int) defaultWidth, (int) (defaultHeight /100.0));
-		entry.setSize(entryDim);
-		entry.setPreferredSize(entryDim);
-		entry.setMinimumSize(entryDim);
-		
-		root.add(mainPanel);
-		mainPanel.add(scrollPane);
-		mainPanel.add(entry);
+//		Dimension entryDim = new Dimension((int) defaultWidth, (int) (defaultHeight /100.0));
+//		entry.setSize(entryDim);
+//		entry.setPreferredSize(entryDim);
+//		entry.setMinimumSize(entryDim);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.ipady = 1;
+		mainPanel.add(entry, c);
 		
 		ServerOutComms outComms = new ServerOutComms(ipAddress, ClientMain.getCreds());
 		outComms.start();
