@@ -8,6 +8,7 @@
 
 package client;
 
+import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,8 +28,10 @@ public class ClientMain {
 	private static int remoteIndex = 0;
 	private static boolean stayAlive = true;
 	public static Queuer<Message> messageQueue;
+	private static LoginDeets creds;
 	
 	/**
+	 * 
 		 * @author hugo
 		 * Date of creation: May 26, 2015 
 		 * @param: None
@@ -39,11 +42,12 @@ public class ClientMain {
 	public static void main(String[] args) throws IOException {
 		messageQueue = new Queuer<Message>();
 		localIndex = new Vector<Boolean>();
+		startGUI();
 		System.out.println("Enter username to connect as: ");
 		String userName = userIn.readLine();
 		System.out.println("Enter the IP address to connect to: ");
 		String address = userIn.readLine();
-		LoginDeets creds = new LoginDeets(userName, null);
+		creds = new LoginDeets(userName, null);
 		
 		ServerOutComms outComms = new ServerOutComms(address, creds);
 		outComms.start();
@@ -118,6 +122,19 @@ public class ClientMain {
 		}
 		return missingIndices;
 	}
+	
+	private static void startGUI(){
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					new ClientGUI();
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * @return the stayAlive
@@ -132,5 +149,15 @@ public class ClientMain {
 	public static void setAlive(boolean stayAlive) {
 		ClientMain.stayAlive = stayAlive;
 	}
+
+	public static LoginDeets getCreds() {
+		return creds;
+	}
+
+	public static void setCreds(LoginDeets creds) {
+		ClientMain.creds = creds;
+	}
+	
+	
 
 }
