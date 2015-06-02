@@ -27,7 +27,6 @@ public class LoginGUI {
 	
 	private static class ButtonHandler implements ActionListener{
 
-		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == userEntry){
 				userEntered = true;
