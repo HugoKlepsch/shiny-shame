@@ -42,33 +42,34 @@ public class ClientMain {
 	public static void main(String[] args) throws IOException {
 		messageQueue = new Queuer<Message>();
 		localIndex = new Vector<Boolean>();
-		startGUI();
-		System.out.println("Enter username to connect as: ");
-		String userName = userIn.readLine();
-		System.out.println("Enter the IP address to connect to: ");
-		String address = userIn.readLine();
-		creds = new LoginDeets(userName, null);
+		login();
+//		System.out.println("Enter username to connect as: ");
+//		String userName = userIn.readLine();
+//		System.out.println("Enter the IP address to connect to: ");
+//		String address = userIn.readLine();
+//		creds = new LoginDeets(userName, null);
 		
-		ServerOutComms outComms = new ServerOutComms(address, creds);
-		outComms.start();
+//		ServerOutComms outComms = new ServerOutComms(address, creds);
+//		outComms.start();
 		
-		System.out.println("Type \"Exit\" to close");
-		String messageContent =  "";
-		Message message;
-		while(!(messageContent.equals("Exit"))){
-			messageContent = userIn.readLine();
-			message = new Message(creds, messageContent);
-			if (!(messageContent.equals("Exit"))) {
-				messageQueue.enQueue(message); 
-			} else {
-				setAlive(false);
-			}
-		}
+//		System.out.println("Type \"Exit\" to close");
+//		String messageContent =  "";
+//		Message message;
+//		while(!(messageContent.equals("Exit"))){
+//			messageContent = userIn.readLine();
+//			message = new Message(creds, messageContent);
+//			if (!(messageContent.equals("Exit"))) {
+//				messageQueue.enQueue(message); 
+//			} else {
+//				setAlive(false);
+//			}
+//		}
 	
 	}
 
 	public static void addMessage(Message message){
-		System.out.println(message.getCredentials().getUserName() + ": " + message.getMessage());
+//		System.out.println(message.getCredentials().getUserName() + ": " + message.getMessage());
+		ClientGUI.addMessage(message);
 	}
 	
 	/**
@@ -123,11 +124,24 @@ public class ClientMain {
 		return missingIndices;
 	}
 	
-	private static void startGUI(){
+	public static void startGUI(String ipAddress){
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					new ClientGUI();
+					new ClientGUI(ipAddress);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	private static void login(){
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					new LoginGUI();
 
 				} catch (Exception e) {
 					e.printStackTrace();
