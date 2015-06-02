@@ -32,10 +32,16 @@ public class Connection extends Thread {
 		this.outSocket = sock;
 	}
 
-	private void sendMsg(Message message) throws IOException {
-		ActionRequest sendMsgRequest = new ActionRequest(ActionTypes.SCSENDMESSAGE, message);
-		System.out.println("Sending message to: " + userDeets.getUserName() + " with message #" + sendMsgRequest.getMessage().getIndex());
-		scStream.writeObject(sendMsgRequest);
+	private void sendMsg(Message message, int actionType) throws IOException {
+		ActionRequest serverResponse = new ActionRequest(actionType, message);
+		if (actionType == ActionTypes.SCSENDMESSAGE) {
+			System.out.println("Sending message to: " + userDeets.getUserName() + " with message #"
+					+ serverResponse.getMessage().getIndex());
+			
+		} else if(actionType == ActionTypes.SCSENDUSERS){
+			System.out.println("Sending userlist to: " + userDeets.getUserName());
+		}
+		scStream.writeObject(serverResponse);
 		scStream.flush();
 	}
 
@@ -61,7 +67,8 @@ public class Connection extends Thread {
 					wantedIndex = actionRequest.getIndex();
 					message = mainThread.getMessage(wantedIndex);
 					
-					sendMsg(message);
+					sendMsg(message, ActionTypes.SCSENDMESSAGE);
+					sendMsg(null, ActionTypes.SCSENDUSERS);
 				} else if (actionRequest.getAction() == ActionTypes.CSSENDMESSAGE) {
 					System.out.println(userDeets.getUserName() + "sent message" + actionRequest.getMessage().getMessage());
 					message = actionRequest.getMessage();
