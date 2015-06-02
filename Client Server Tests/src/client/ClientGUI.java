@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 import javax.swing.text.DefaultCaret;
 
 import sharedPackages.Message;
@@ -23,7 +24,6 @@ public class ClientGUI {
 	private static JTextArea messageArea;
 	private static JTextField entry;
 	private static JScrollPane scrollPane;
-	private static JLabel messageLabel;
 	private static ButtonHandler onClick = new ButtonHandler();
 	public static Font defaultFont = new Font("Ubuntu", 1, 13);
 	public static Font largeFont = new Font("Ubuntu", 1, 36);
@@ -57,8 +57,6 @@ public class ClientGUI {
 		root.setBounds(0, 0, (int) (defaultWidth), (int) (defaultHeight));
 		mainPanel = new JPanel(new GridLayout(0,1, 5, 5));
 		
-		messageLabel = new JLabel("Messages");
-		messageLabel.setFont(defaultFont);
 		messageArea = new JTextArea();
 		messageArea.setFont(defaultFont);
 		messageArea.setEditable(false);
@@ -68,13 +66,13 @@ public class ClientGUI {
 		entry = new JTextField();
 		entry.setFont(defaultFont);
 		entry.addActionListener(onClick);
-		Dimension entryDim = new Dimension((int) defaultWidth, (int) (defaultHeight /20));
+		Dimension entryDim = new Dimension((int) defaultWidth, (int) (defaultHeight /100.0));
 		entry.setSize(entryDim);
+		entry.setPreferredSize(entryDim);
+		entry.setMinimumSize(entryDim);
 		
 		root.add(mainPanel);
-		mainPanel.add(messageLabel);
 		mainPanel.add(scrollPane);
-//		mainPanel.add(messageArea);
 		mainPanel.add(entry);
 		
 		ServerOutComms outComms = new ServerOutComms(ipAddress, ClientMain.getCreds());
