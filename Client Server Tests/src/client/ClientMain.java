@@ -124,7 +124,7 @@ public class ClientMain {
 		return missingIndices;
 	}
 	
-	public static void startGUI(String ipAddress){
+	public static void startGUI(final String ipAddress){
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

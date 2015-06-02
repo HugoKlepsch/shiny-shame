@@ -30,7 +30,6 @@ public class ClientGUI {
 	
 	private static class ButtonHandler implements ActionListener{
 
-		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == entry){
 				if (!(entry.getText().equals("/exit"))) {
