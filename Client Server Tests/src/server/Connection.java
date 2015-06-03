@@ -39,6 +39,13 @@ public class Connection extends Thread {
 		scStream.writeObject(serverResponse);
 		scStream.flush();
 	}
+	
+	private void sendUsers() throws IOException{
+		ActionRequest sendUserRequest = new ActionRequest(ActionTypes.SCSENDUSERS, mainThread.getUsers());
+		scStream.writeObject(sendUserRequest);
+		scStream.flush();
+		System.out.println("Sending userlist to: " + userDeets.getUserName());
+	}
 
 	public void run() {
 		try {
@@ -63,10 +70,7 @@ public class Connection extends Thread {
 					message = mainThread.getMessage(wantedIndex);
 					
 					sendMsg(message);
-					ActionRequest sendUserRequest = new ActionRequest(ActionTypes.SCSENDUSERS);
-					scStream.writeObject(sendUserRequest);
-					scStream.flush();
-					System.out.println("Sending userlist to: " + userDeets.getUserName());
+					sendUsers();
 					
 				} else if (actionRequest.getAction() == ActionTypes.CSSENDMESSAGE) {
 					System.out.println(userDeets.getUserName() + "sent message" + actionRequest.getMessage().getMessage());
@@ -78,12 +82,14 @@ public class Connection extends Thread {
 					String msg = userDeets.getUserName() + " connected";
 					Message connectMsg = new Message(rootDeets, msg);
 					mainThread.addMessage(connectMsg);
+					mainThread.addUser(userDeets.getUserName());
 				}
 
 			} while (actionRequest.getAction() != ActionTypes.CSDISCONNECT);
 			String msg = userDeets.getUserName() + " disconnected";
 			Message disConnectMsg = new Message(rootDeets, msg);
 			mainThread.addMessage(disConnectMsg);
+			mainThread.removeUser(userDeets.getUserName());
 			System.out.println(msg);
 			scStream.close();
 			outSocket.close();
@@ -96,5 +102,8 @@ public class Connection extends Thread {
 			e.printStackTrace();
 		}
 	}
+
+	
+	
 
 }

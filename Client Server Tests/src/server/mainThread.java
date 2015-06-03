@@ -22,6 +22,7 @@ public class mainThread {
 	public static int outPort = 6969;
 	private static ServerSocket serverSocket;
 	private static Vector<Connection> connections;
+	private static Vector<String> users;
 
 	private static Vector<Message> messages;
 
@@ -95,6 +96,18 @@ public class mainThread {
 
 	public static Message getMessage(int index) {
 		return messages.get(index);
+	}
+	
+	public static void addUser(String username){
+		users.addElement(username);
+	}
+	
+	public static void removeUser(String username){
+		users.remove(username);
+	}
+	
+	public static Vector<String> getUsers(){
+		return users;
 	}
 
 }
