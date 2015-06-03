@@ -83,6 +83,7 @@ public class Connection extends Thread {
 					Message connectMsg = new Message(rootDeets, msg);
 					mainThread.addMessage(connectMsg);
 					mainThread.addUser(userDeets.getUserName());
+					sendUsers();
 				}
 
 			} while (actionRequest.getAction() != ActionTypes.CSDISCONNECT);
@@ -90,6 +91,7 @@ public class Connection extends Thread {
 			Message disConnectMsg = new Message(rootDeets, msg);
 			mainThread.addMessage(disConnectMsg);
 			mainThread.removeUser(userDeets.getUserName());
+			sendUsers();
 			System.out.println(msg);
 			scStream.close();
 			outSocket.close();
