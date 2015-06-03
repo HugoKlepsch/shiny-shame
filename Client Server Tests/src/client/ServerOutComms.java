@@ -69,6 +69,7 @@ public class ServerOutComms extends Thread{
 		csStream.flush();
 		Thread.sleep(400);
 		csStream.close();
+		socket.close();
 		} catch (IOException e){
 			e.printStackTrace();
 		} catch (InterruptedException e) {

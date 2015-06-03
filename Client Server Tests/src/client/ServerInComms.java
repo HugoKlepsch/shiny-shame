@@ -63,7 +63,9 @@ public class ServerInComms extends Thread{
 					ClientGUI.updateUsers(actionRequest.getUsers());
 					
 				}
-			}
+			} 
+			scStream.close();
+			scSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
