@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Vector;
 
 import sharedPackages.ActionRequest;
 import sharedPackages.LoginDeets;
@@ -41,10 +42,14 @@ public class Connection extends Thread {
 	}
 	
 	private void sendUsers() throws IOException{
-		ActionRequest sendUserRequest = new ActionRequest(ActionTypes.SCSENDUSERS, mainThread.getUsers());
+		Vector<String> userList = mainThread.getUsers();
+		ActionRequest sendUserRequest = new ActionRequest(ActionTypes.SCSENDUSERS, userList);
 		scStream.writeObject(sendUserRequest);
 		scStream.flush();
 		System.out.println("Sending userlist to: " + userDeets.getUserName());
+		for (int i = 0; i < userList.size(); i++) {
+			System.out.println("        " + userList.get(i));
+		}
 	}
 
 	public void run() {
