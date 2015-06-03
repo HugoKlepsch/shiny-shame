@@ -101,10 +101,12 @@ public class mainThread {
 	
 	public static void addUser(String username){
 		users.addElement(username);
+		System.out.println("Added: " + username + " to the array");
 	}
 	
 	public static void removeUser(String username){
 		users.remove(username);
+		System.out.println("Removed: " + username + " from the array");
 	}
 	
 	public static Vector<String> getUsers(){
