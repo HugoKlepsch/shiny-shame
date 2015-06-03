@@ -56,8 +56,8 @@ public class ServerInComms extends Thread{
 					
 				} else if(actionRequest.getAction() == ActionTypes.SCSENDUSERS){
 					System.out.println("Recieved new user list");
-					ClientMain.setUsers(actionRequest.getUsers());
-					ClientGUI.updateUsers();
+//					ClientMain.setUsers(actionRequest.getUsers());
+					ClientGUI.updateUsers(actionRequest.getUsers());
 					
 				}
 			}

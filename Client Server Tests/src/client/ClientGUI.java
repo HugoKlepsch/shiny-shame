@@ -121,9 +121,8 @@ public class ClientGUI {
 		messageArea.setText(messageArea.getText() + message.getCredentials().getUserName() + ": " + message.getMessage() +"\n");
 	}
 	
-	public static void updateUsers(){
+	public static void updateUsers(Vector<String> users){
 		userArea.setText(userTitle);
-		Vector<String> users = ClientMain.getUsers();
 		for(int i = 0; i<users.size();i++){
 			userArea.setText(userArea.getText() + users.get(i) + "\n");
 			System.out.println("Adding: " + users.get(i) + " to the GUI");
