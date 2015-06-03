@@ -111,6 +111,14 @@ public class mainThread {
 	public static Vector<String> getUsers(){
 		return users;
 	}
+	
+	public static Vector<String> getUsers2(){
+		Vector<String> userList = new Vector<String>();
+		for(int i = 0; i<connections.size();i++){
+			userList.add(connections.elementAt(i).getUserDeets().getUserName());
+		}
+		return userList;
+	}
 
 }
 
