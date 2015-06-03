@@ -126,6 +126,7 @@ public class ClientGUI {
 		Vector<String> users = ClientMain.getUsers();
 		for(int i = 0; i<users.size();i++){
 			userArea.setText(userArea.getText() + users.get(i) + "\n");
+			System.out.println("Adding: " + users.get(i) + " to the GUI");
 		}
 	}
 
