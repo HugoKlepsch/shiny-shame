@@ -179,7 +179,6 @@ public class ClientMain {
 	}
 
 	public static void setUsers(Vector<String> users) {
-		ClientMain.users.clear();
 		ClientMain.users = users;
 		System.out.println("Updated user list");
 	}
