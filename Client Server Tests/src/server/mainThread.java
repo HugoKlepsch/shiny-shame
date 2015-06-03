@@ -105,8 +105,7 @@ public class mainThread {
 	}
 	
 	public static void removeUser(String username){
-		users.remove(username);
-		System.out.println("Removed: " + username + " from the array");
+		System.out.println("Attempted to remove " + username + " from list. " + (users.remove(username) ? "Successful": "Failed:"));
 	}
 	
 	public static Vector<String> getUsers(){
