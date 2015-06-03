@@ -29,6 +29,7 @@ public class ClientMain {
 	private static boolean stayAlive = true;
 	public static Queuer<Message> messageQueue;
 	private static LoginDeets creds;
+	private static Vector<String> users;
 	
 	/**
 	 * 
@@ -42,6 +43,7 @@ public class ClientMain {
 	public static void main(String[] args) throws IOException {
 		messageQueue = new Queuer<Message>();
 		localIndex = new Vector<Boolean>();
+		users = new Vector<String>();
 		login();
 //		System.out.println("Enter username to connect as: ");
 //		String userName = userIn.readLine();
@@ -171,6 +173,15 @@ public class ClientMain {
 	public static void setCreds(LoginDeets creds) {
 		ClientMain.creds = creds;
 	}
+
+	public static Vector<String> getUsers() {
+		return users;
+	}
+
+	public static void setUsers(Vector<String> users) {
+		ClientMain.users = users;
+	}
+	
 	
 	
 

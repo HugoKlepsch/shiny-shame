@@ -4,18 +4,16 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JToolBar;
 import javax.swing.text.DefaultCaret;
 
 import sharedPackages.Message;
@@ -24,11 +22,14 @@ public class ClientGUI {
 	private static JFrame root;
 	private static JPanel mainPanel;
 	private static JTextArea messageArea;
+	private static JTextArea userArea;
 	private static JTextField entry;
-	private static JScrollPane scrollPane;
+	private static JScrollPane messageScrollPane;
+	private static JScrollPane userScrollPane;
 	private static ButtonHandler onClick = new ButtonHandler();
 	public static Font defaultFont = new Font("Ubuntu", 1, 13);
 	public static Font largeFont = new Font("Ubuntu", 1, 36);
+	private static String userTitle = "Users:" + "\n";
 	
 	
 	
@@ -74,14 +75,27 @@ public class ClientGUI {
 		messageArea.setEditable(false);
 		DefaultCaret caret = (DefaultCaret)messageArea.getCaret();
 		 caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		scrollPane = new JScrollPane(messageArea);
+		messageScrollPane = new JScrollPane(messageArea);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.weightx = 10;
 		c.weighty = 100;
 		c.ipady = 300;
-		mainPanel.add(scrollPane, c);
+		mainPanel.add(messageScrollPane, c);
+		
+		userArea = new JTextArea();
+		userArea.setText("Users:" + "\n");
+		userArea.setFont(defaultFont);
+		userArea.setEditable(false);
+		userScrollPane = new JScrollPane(userArea);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		c.weightx = 1;
+		c.weighty = 100;
+		c.ipady = 300;
+		mainPanel.add(userScrollPane, c);
 		
 		
 		entry = new JTextField();
@@ -105,6 +119,14 @@ public class ClientGUI {
 	
 	public static void addMessage(Message message){
 		messageArea.setText(messageArea.getText() + message.getCredentials().getUserName() + ": " + message.getMessage() +"\n");
+	}
+	
+	public static void updateUsers(){
+		userArea.setText(userTitle);
+		Vector<String> users = ClientMain.getUsers();
+		for(int i = 0; i<users.size();i++){
+			userArea.setText(userArea.getText() + users.get(i));
+		}
 	}
 
 }

@@ -54,6 +54,9 @@ public class ServerInComms extends Thread{
 					}
 					
 					
+				} else if(actionRequest.getAction() == ActionTypes.SCSENDUSERS){
+					ClientMain.setUsers(actionRequest.getUsers());
+					ClientGUI.updateUsers();
 				}
 			}
 		} catch (IOException e) {
