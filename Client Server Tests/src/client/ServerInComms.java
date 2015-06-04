@@ -65,7 +65,7 @@ public class ServerInComms extends Thread{
 				}
 			} 
 			scStream.close();
-			scSocket.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
