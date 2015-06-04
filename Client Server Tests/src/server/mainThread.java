@@ -23,7 +23,7 @@ public class mainThread {
 	private static ServerSocket serverSocket;
 	public static Vector<Connection> connections;
 	private static Vector<String> users;
-
+	private static Vector<String> connectedUsers;
 	private static Vector<Message> messages;
 
 	/**
@@ -44,6 +44,8 @@ public class mainThread {
 		connections = new Vector<Connection>();
 		messages = new Vector<Message>();
 		users = new Vector<String>();
+		connectedUsers = new Vector<String>();
+		
 		
 		new ThreadManager().start();
 		
@@ -116,6 +118,15 @@ public class mainThread {
 		}
 		return userList;
 	}
+	
+	public static Vector<String> getUsers3(){
+		return connectedUsers;
+	}
+	
+	public static void setUsers3(Vector<String> connectedUsers){
+		mainThread.connectedUsers = connectedUsers;
+	}
+	
 
 }
 
@@ -126,6 +137,7 @@ class ThreadManager extends Thread{
 	@Override
 	public void run(){
 		while (true) {
+			Vector<String> tempConnectedUsers = new Vector<String>();
 			try {
 				Thread.sleep(800);
 			} catch (InterruptedException e1) {
@@ -143,8 +155,11 @@ class ThreadManager extends Thread{
 					mainThread.connections.remove(i); // remove it from our list
 					System.out.println("removed connection number: " + i);
 					break; // to avoid index errors after removing an index
+				} else {
+					tempConnectedUsers.addElement(mainThread.connections.get(i).getUserDeets().getUserName());
 				}
 			}
+			mainThread.setUsers3(tempConnectedUsers);
 		}
 	}
 }

@@ -44,10 +44,10 @@ public class Connection extends Thread {
 	private void sendUsers() throws IOException{
 		Vector<String> userList = mainThread.getUsers2();
 		ActionRequest sendUserRequest = new ActionRequest(ActionTypes.SCSENDUSERS, userList);
-		System.out.println("Sending userlist to: " + userDeets.getUserName());
-		for (int i = 0; i < userList.size(); i++) {
-			System.out.println("        " + userList.get(i));
-		}
+//		System.out.println("Sending userlist to: " + userDeets.getUserName());
+//		for (int i = 0; i < userList.size(); i++) {
+//			System.out.println("        " + userList.get(i));
+//		}
 		scStream.writeObject(sendUserRequest);
 		scStream.flush();
 		
