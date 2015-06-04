@@ -21,7 +21,7 @@ import sharedPackages.Message;
 public class mainThread {
 	public static int outPort = 6969;
 	private static ServerSocket serverSocket;
-	private static Vector<Connection> connections;
+	public static Vector<Connection> connections;
 	private static Vector<String> users;
 
 	private static Vector<Message> messages;
@@ -44,17 +44,14 @@ public class mainThread {
 		connections = new Vector<Connection>();
 		messages = new Vector<Message>();
 		users = new Vector<String>();
+		
+		new ThreadManager().start();
+		
 		while (true) {
 			Socket scSocket = serverSocket.accept();
 			connections.add(new Connection(scSocket));
 			connections.lastElement().start();
-			for (int i = 0; i < connections.size(); i++) {
-				if (!connections.get(i).isAlive()) { // if the connection closes
-					connections.remove(i); // remove it from our list
-					System.out.println("removed connection number: " + i);
-					break; // to avoid index errors after removing an index
-				}
-			}
+			
 		}
 	}
 
@@ -122,7 +119,23 @@ public class mainThread {
 
 }
 
-
+class ThreadManager extends Thread{
+	public ThreadManager(){
+		
+	}
+	@Override
+	public void run(){
+		while (true) {
+			for (int i = 0; i < mainThread.connections.size(); i++) {
+				if (!mainThread.connections.get(i).isAlive()) { // if the connection closes
+					mainThread.connections.remove(i); // remove it from our list
+					System.out.println("removed connection number: " + i);
+					break; // to avoid index errors after removing an index
+				}
+			}
+		}
+	}
+}
 
 
 
