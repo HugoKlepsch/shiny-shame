@@ -19,7 +19,7 @@ public class LoginGUI {
 	private static JPanel mainPanel;
 	private static JLabel mainLabel, userLabel, ipLabel;
 	private static JTextField userEntry, ipEntry;
-	private static JButton connectButt;
+	private static JButton connectButt, quitButt;
 	private static ButtonHandler onClick = new ButtonHandler();
 	private static boolean userEntered, ipEntered;
 	private static String ipAddress;
@@ -42,6 +42,8 @@ public class LoginGUI {
 			} else if(e.getSource() == connectButt){
 				ClientMain.setCreds(new LoginDeets(userEntry.getText(), null));
 				ClientMain.startGUI(ipAddress);
+				root.dispose();
+			} else if(e.getSource() == quitButt){
 				root.dispose();
 			}
 			
@@ -73,6 +75,9 @@ public class LoginGUI {
 		connectButt.setFont(ClientGUI.defaultFont);
 		connectButt.addActionListener(onClick);
 		connectButt.setEnabled(false);
+		quitButt = new JButton("Quit");
+		quitButt.setFont(ClientGUI.defaultFont);
+		quitButt.addActionListener(onClick);
 		ipEntered = userEntered = false;
 		
 		root.add(mainPanel);
@@ -81,6 +86,7 @@ public class LoginGUI {
 		mainPanel.add(ipLabel);
 		mainPanel.add(ipEntry);
 		mainPanel.add(connectButt);
+		mainPanel.add(quitButt);
 		
 		root.setVisible(true);
 		
