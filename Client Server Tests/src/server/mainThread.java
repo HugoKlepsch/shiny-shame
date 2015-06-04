@@ -126,6 +126,12 @@ class ThreadManager extends Thread{
 	@Override
 	public void run(){
 		while (true) {
+			try {
+				Thread.sleep(800);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			for (int i = 0; i < mainThread.connections.size(); i++) {
 				try {
 					Thread.sleep(20);
