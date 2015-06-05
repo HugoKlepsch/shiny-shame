@@ -64,6 +64,7 @@ public class ServerOutComms extends Thread{
 			}
 			
 		}
+		System.out.println("Exited outstream loop to send disconnect");
 		ActionRequest disconnectRequest = new ActionRequest(ActionTypes.CSDISCONNECT);
 		csStream.writeObject(disconnectRequest);
 		csStream.flush();
