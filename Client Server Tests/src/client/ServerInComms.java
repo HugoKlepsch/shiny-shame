@@ -64,7 +64,7 @@ public class ServerInComms extends Thread{
 					
 				}
 			} 
-			scStream.close();
+//			scStream.close();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
