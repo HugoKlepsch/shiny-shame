@@ -119,6 +119,10 @@ public class Connection extends Thread {
 		this.userDeets = userDeets;
 	}
 	
+	public String getIPAddress(){
+		return outSocket.getInetAddress().getHostAddress();
+	}
+	
 
 	
 	

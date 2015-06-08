@@ -24,6 +24,7 @@ public class mainThread {
 	public static Vector<Connection> connections;
 	private static Vector<String> users;
 	private static Vector<String> connectedUsers;
+	private static Vector<String> connectedIPAddresses;
 	private static Vector<Message> messages;
 
 	/**
@@ -48,6 +49,7 @@ public class mainThread {
 		
 		
 		new ThreadManager().start();
+		new ServerCommands().start();
 		
 		while (true) {
 			Socket scSocket = serverSocket.accept();
@@ -126,6 +128,14 @@ public class mainThread {
 	public static void setUsers3(Vector<String> connectedUsers){
 		mainThread.connectedUsers = connectedUsers;
 	}
+
+	public static Vector<String> getConnectedIPAddresses() {
+		return connectedIPAddresses;
+	}
+
+	public static void setConnectedIPAddresses(Vector<String> connectedIPAddresses) {
+		mainThread.connectedIPAddresses = connectedIPAddresses;
+	}
 	
 
 }
@@ -138,6 +148,7 @@ class ThreadManager extends Thread{
 	public void run(){
 		while (true) {
 			Vector<String> tempConnectedUsers = new Vector<String>();
+			Vector<String> tempConnectedIPAddresses = new Vector<String>();
 			try {
 				Thread.sleep(800);
 			} catch (InterruptedException e1) {
@@ -157,9 +168,11 @@ class ThreadManager extends Thread{
 					break; // to avoid index errors after removing an index
 				} else {
 					tempConnectedUsers.addElement(mainThread.connections.get(i).getUserDeets().getUserName());
+					tempConnectedIPAddresses.addElement(mainThread.connections.get(i).getIPAddress());
 				}
 			}
 			mainThread.setUsers3(tempConnectedUsers);
+			mainThread.setConnectedIPAddresses(tempConnectedIPAddresses);
 		}
 	}
 }
