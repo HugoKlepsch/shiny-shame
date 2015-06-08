@@ -9,9 +9,7 @@
 package client;
 
 import java.awt.EventQueue;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Vector;
 
 import sharedPackages.LoginDeets;
@@ -23,7 +21,6 @@ import sharedPackages.Queuer;
  *
  */
 public class ClientMain {
-	private static BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
 	private static Vector<Boolean> localIndex;
 	private static int remoteIndex = 0;
 	private static boolean stayAlive = true;

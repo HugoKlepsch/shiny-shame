@@ -13,7 +13,6 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 
 import sharedPackages.ActionRequest;
-import sharedPackages.ActionTypes;
 
 /**
  * @author hugo
@@ -33,7 +32,7 @@ public class ServerInComms extends Thread{
 			scStream = new ObjectInputStream(scSocket.getInputStream());
 			while(ClientMain.StayAlive()){
 				actionRequest = (ActionRequest) scStream.readObject();
-				if(actionRequest.getAction() == ActionTypes.SCSENDCURRENTMESSAGEINDEX){
+				if(actionRequest.getAction() == ActionRequest.SCSENDCURRENTMESSAGEINDEX){
 					
 					
 					ClientMain.setRemoteIndex(actionRequest.getIndex());
@@ -45,7 +44,7 @@ public class ServerInComms extends Thread{
 					}
 					
 					
-				} else if (actionRequest.getAction() == ActionTypes.SCSENDMESSAGE) {
+				} else if (actionRequest.getAction() == ActionRequest.SCSENDMESSAGE) {
 					if(ClientMain.hasMessage(actionRequest.getMessage().getIndex())){ //if we already have the message, 
 						//do nothing
 					} else { //if we do not
@@ -54,7 +53,7 @@ public class ServerInComms extends Thread{
 					}
 					
 					
-				} else if(actionRequest.getAction() == ActionTypes.SCSENDUSERS){
+				} else if(actionRequest.getAction() == ActionRequest.SCSENDUSERS){
 //					System.out.println("Recieved new user list containing:");
 //					for(int i = 0; i < actionRequest.getUsers().size(); i++){
 //						System.out.println(actionRequest.getUsers().get(i));

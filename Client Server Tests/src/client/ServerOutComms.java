@@ -14,7 +14,6 @@ import java.net.Socket;
 import sharedPackages.ActionRequest;
 import sharedPackages.LoginDeets;
 import sharedPackages.Message;
-import sharedPackages.ActionTypes;
 
 /**
  * @author graham
@@ -34,7 +33,7 @@ public class ServerOutComms extends Thread{
 	}
 	
 	private void sendMsg(Message message) throws IOException{
-		csStream.writeObject(new ActionRequest(ActionTypes.CSSENDMESSAGE, message));
+		csStream.writeObject(new ActionRequest(ActionRequest.CSSENDMESSAGE, message));
 		csStream.flush();
 	}
 	
@@ -44,17 +43,17 @@ public class ServerOutComms extends Thread{
 		csStream = new ObjectOutputStream(socket.getOutputStream());
 		ServerInComms inComms = new ServerInComms(socket);
 		inComms.start();
-		ActionRequest connectRequest = new ActionRequest(ActionTypes.CSCONNECT, new Message(userDeets, null));
+		ActionRequest connectRequest = new ActionRequest(ActionRequest.CSCONNECT, new Message(userDeets, null));
 		csStream.writeObject(connectRequest);
 		csStream.flush();
-		ActionRequest indexRequest = new ActionRequest(ActionTypes.CSGETCURRENTMESSAGEINDEX);
+		ActionRequest indexRequest = new ActionRequest(ActionRequest.CSGETCURRENTMESSAGEINDEX);
 		while(ClientMain.StayAlive()){
 			Thread.sleep(loopDelay);
 			csStream.writeObject(indexRequest);
 			csStream.flush();
 			for (int i = 0; i < ClientMain.getLocalIndexLength(); i++) {
 				if (!ClientMain.hasMessage(i)) { //if the value stored = false, (we don't have it) 
-					ActionRequest getMsgRequest = new ActionRequest(ActionTypes.CSGETMESSAGE, i);
+					ActionRequest getMsgRequest = new ActionRequest(ActionRequest.CSGETMESSAGE, i);
 					csStream.writeObject(getMsgRequest);
 					csStream.flush();
 				}
@@ -65,7 +64,7 @@ public class ServerOutComms extends Thread{
 			
 		}
 		System.out.println("Exited outstream loop to send disconnect");
-		ActionRequest disconnectRequest = new ActionRequest(ActionTypes.CSDISCONNECT);
+		ActionRequest disconnectRequest = new ActionRequest(ActionRequest.CSDISCONNECT);
 		csStream.writeObject(disconnectRequest);
 		csStream.flush();
 		Thread.sleep(1000);

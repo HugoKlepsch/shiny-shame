@@ -16,7 +16,6 @@ import java.util.Vector;
 import sharedPackages.ActionRequest;
 import sharedPackages.LoginDeets;
 import sharedPackages.Message;
-import sharedPackages.ActionTypes;
 
 /**
  * @author graham
@@ -34,7 +33,7 @@ public class Connection extends Thread {
 	}
 
 	private void sendMsg(Message message) throws IOException {
-		ActionRequest serverResponse = new ActionRequest(ActionTypes.SCSENDMESSAGE, message);
+		ActionRequest serverResponse = new ActionRequest(ActionRequest.SCSENDMESSAGE, message);
 		System.out.println("Sending message to: " + userDeets.getUserName() + " with message #"
 			+ serverResponse.getMessage().getIndex());
 		scStream.writeObject(serverResponse);
@@ -43,7 +42,7 @@ public class Connection extends Thread {
 	
 	private void sendUsers() throws IOException{
 		Vector<String> userList = mainThread.getUsers3();
-		ActionRequest sendUserRequest = new ActionRequest(ActionTypes.SCSENDUSERS, userList);
+		ActionRequest sendUserRequest = new ActionRequest(ActionRequest.SCSENDUSERS, userList);
 //		System.out.println("Sending userlist to: " + userDeets.getUserName());
 //		for (int i = 0; i < userList.size(); i++) {
 //			System.out.println("        " + userList.get(i));
@@ -63,14 +62,14 @@ public class Connection extends Thread {
 			int currIndex;
 			do {
 				actionRequest = (ActionRequest) csStream.readObject();
-				if (actionRequest.getAction() == ActionTypes.CSGETCURRENTMESSAGEINDEX) {
+				if (actionRequest.getAction() == ActionRequest.CSGETCURRENTMESSAGEINDEX) {
 					currIndex = mainThread.getCurrentMessageIndex();
 //					System.out.println("Index to send to client: " + currIndex);
-					ActionRequest sendIndexRequest = new ActionRequest(ActionTypes.SCSENDCURRENTMESSAGEINDEX, currIndex);
+					ActionRequest sendIndexRequest = new ActionRequest(ActionRequest.SCSENDCURRENTMESSAGEINDEX, currIndex);
 					scStream.writeObject(sendIndexRequest);
 					scStream.flush();
 
-				} else if (actionRequest.getAction() == ActionTypes.CSGETMESSAGE) {
+				} else if (actionRequest.getAction() == ActionRequest.CSGETMESSAGE) {
 					System.out.println(userDeets.getUserName() + " wants message #" + actionRequest.getIndex());
 					wantedIndex = actionRequest.getIndex();
 					message = mainThread.getMessage(wantedIndex);
@@ -78,11 +77,11 @@ public class Connection extends Thread {
 					sendMsg(message);
 					sendUsers();
 					
-				} else if (actionRequest.getAction() == ActionTypes.CSSENDMESSAGE) {
+				} else if (actionRequest.getAction() == ActionRequest.CSSENDMESSAGE) {
 					System.out.println(userDeets.getUserName() + "sent message" + actionRequest.getMessage().getMessage());
 					message = actionRequest.getMessage();
 					mainThread.addMessage(message);
-				} else if (actionRequest.getAction() == ActionTypes.CSCONNECT) {
+				} else if (actionRequest.getAction() == ActionRequest.CSCONNECT) {
 					userDeets = actionRequest.getMessage().getCredentials();
 					System.out.println(userDeets.getUserName() + " " + actionRequest.getAction());
 					String msg = userDeets.getUserName() + " connected";
@@ -92,7 +91,7 @@ public class Connection extends Thread {
 					sendUsers();
 				}
 
-			} while (actionRequest.getAction() != ActionTypes.CSDISCONNECT);
+			} while (actionRequest.getAction() != ActionRequest.CSDISCONNECT);
 			String msg = userDeets.getUserName() + " disconnected";
 			Message disConnectMsg = new Message(rootDeets, msg);
 			mainThread.addMessage(disConnectMsg);
