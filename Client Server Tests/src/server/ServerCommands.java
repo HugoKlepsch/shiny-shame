@@ -14,6 +14,7 @@ import sharedPackages.Message;
  * commands to have:
  * message - args are message as root
  * list - args either users or ip, if neither list both
+ * kick - args either -u username or -a ip to kick
  */
 
 
@@ -45,31 +46,34 @@ public class ServerCommands extends Thread {
 				Message message = new Message(root, messageContent);
 				mainThread.addMessage(message);
 			} else if(command.equals("list")){
-				Vector<String> ipAddress = new Vector<String>();
-				Vector<String> users = new Vector<String>();
-				if(args[0].equals("ip")){
-					ipAddress = mainThread.getConnectedIPAddresses();
-					for(int i = 0; i<ipAddress.size();i++){
-						System.out.println(ipAddress.elementAt(i));
-					}
-				} else if(args[0].equals("users")){
-					users = mainThread.getUsers3();
-					for(int i = 0; i<users.size();i++){
-						System.out.println(users.elementAt(i));
-					}
-				} else{
-					ipAddress = mainThread.getConnectedIPAddresses();
-					users = mainThread.getUsers3();
-					for(int i = 0; i<users.size();i++){
-						System.out.println(users.elementAt(i) + " : " + ipAddress.elementAt(i));
-					}
-				}
+				list(args);
+			} else if(command.equals("kick")){
+				kick(args);
 			}
 			
 		}
 		
 	}
 	
+	private void list(String[] args){
+		Vector<String> users = new Vector<String>();
+		users = mainThread.getUsers3();
+		for(int i = 0; i<users.size();i++){
+			System.out.println(users.elementAt(i));
+		}
+	}
+	
+	private void kick(String[] args){
+		String userToKick;
+		if(args[0].equals("-u")){
+			userToKick = args[1];
+			Vector<String> users = mainThread.getUsers3();
+			String[] userArray = (String[]) users.toArray();
+			Arrays.binarySearch(userArray, userToKick);
+		} else if(args[0].equals("-id")){
+			userToKick = args[1];
+		}
+	}
 	
 	
 
