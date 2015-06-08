@@ -13,8 +13,8 @@ import sharedPackages.Message;
 /*
  * commands to have:
  * message - args are message as root
- * list - args either users or ip, if neither list both
- * kick - args either -u username or -a ip to kick
+ * list - no args
+ * kick - args either -u username or -id id to kick, -a kicks all
  */
 
 
@@ -48,7 +48,12 @@ public class ServerCommands extends Thread {
 			} else if(command.equals("list")){
 				list(args);
 			} else if(command.equals("kick")){
-				kick(args);
+				try {
+					kick(args);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		}
@@ -59,19 +64,36 @@ public class ServerCommands extends Thread {
 		Vector<String> users = new Vector<String>();
 		users = mainThread.getUsers3();
 		for(int i = 0; i<users.size();i++){
-			System.out.println(users.elementAt(i));
+			System.out.println("User: " + users.elementAt(i) + " ID: " + i);
 		}
 	}
 	
-	private void kick(String[] args){
+	private void kick(String[] args) throws IOException{
+		Vector<String> users = mainThread.getUsers3();
+		String[] userArray = (String[]) users.toArray();
 		String userToKick;
 		if(args[0].equals("-u")){
 			userToKick = args[1];
-			Vector<String> users = mainThread.getUsers3();
-			String[] userArray = (String[]) users.toArray();
-			Arrays.binarySearch(userArray, userToKick);
+			int index = Arrays.binarySearch(userArray, userToKick);
+			String kickMsg  = "User: " + mainThread.connections.elementAt(index).getUserDeets().getUserName() + " was kicked";
+			Message kickMessage = new Message(root, kickMsg);
+			mainThread.addMessage(kickMessage);
+			mainThread.connections.elementAt(index).kick();
 		} else if(args[0].equals("-id")){
 			userToKick = args[1];
+			int index = Integer.parseInt(userToKick);
+			String kickMsg  = "User: " + mainThread.connections.elementAt(index).getUserDeets().getUserName() + " was kicked";
+			Message kickMessage = new Message(root, kickMsg);
+			mainThread.addMessage(kickMessage);
+			mainThread.connections.elementAt(index).kick();
+		} else if(args[0].equals("-a")){
+			for(int i = 0; i<mainThread.connections.size();i++){
+				int index = i;
+				String kickMsg  = "User: " + mainThread.connections.elementAt(index).getUserDeets().getUserName() + " was kicked";
+				Message kickMessage = new Message(root, kickMsg);
+				mainThread.addMessage(kickMessage);
+				mainThread.connections.elementAt(index).kick();
+			}
 		}
 	}
 	

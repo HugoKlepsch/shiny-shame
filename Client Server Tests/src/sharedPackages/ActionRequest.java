@@ -16,6 +16,7 @@ public class ActionRequest implements Serializable {
 	public static final int SCSENDMESSAGE = 7;
 	public static final int CSPING = 8;
 	public static final int SCSENDUSERS = 9;
+	public static final int SCKICK = 10;
 	
 	private static final long serialVersionUID = 1L;
 	private int action;

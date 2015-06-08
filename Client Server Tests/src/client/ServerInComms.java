@@ -61,6 +61,8 @@ public class ServerInComms extends Thread{
 //					ClientMain.setUsers(actionRequest.getUsers());
 					ClientGUI.updateUsers(actionRequest.getUsers());
 					
+				} else if(actionRequest.getAction() == ActionRequest.SCKICK){
+					ClientMain.setAlive(false);
 				}
 			} 
 //			scStream.close();

@@ -52,6 +52,12 @@ public class Connection extends Thread {
 		scStream.flush();
 		
 	}
+	
+	public void kick() throws IOException{
+		ActionRequest kickRequest = new ActionRequest(ActionRequest.SCKICK);
+		scStream.writeObject(kickRequest);
+		scStream.flush();
+	}
 
 	public void run() {
 		try {
