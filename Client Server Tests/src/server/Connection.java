@@ -38,6 +38,7 @@ public class Connection extends Thread {
 			+ serverResponse.getMessage().getIndex());
 		scStream.writeObject(serverResponse);
 		scStream.flush();
+		sendUsers();
 	}
 	
 	private void sendUsers() throws IOException{
@@ -68,19 +69,19 @@ public class Connection extends Thread {
 					ActionRequest sendIndexRequest = new ActionRequest(ActionRequest.SCSENDCURRENTMESSAGEINDEX, currIndex);
 					scStream.writeObject(sendIndexRequest);
 					scStream.flush();
+					sendUsers();
 
 				} else if (actionRequest.getAction() == ActionRequest.CSGETMESSAGE) {
 					System.out.println(userDeets.getUserName() + " wants message #" + actionRequest.getIndex());
 					wantedIndex = actionRequest.getIndex();
 					message = mainThread.getMessage(wantedIndex);
-					
 					sendMsg(message);
-					sendUsers();
 					
 				} else if (actionRequest.getAction() == ActionRequest.CSSENDMESSAGE) {
 					System.out.println(userDeets.getUserName() + "sent message" + actionRequest.getMessage().getMessage());
 					message = actionRequest.getMessage();
 					mainThread.addMessage(message);
+					sendUsers();
 				} else if (actionRequest.getAction() == ActionRequest.CSCONNECT) {
 					userDeets = actionRequest.getMessage().getCredentials();
 					System.out.println(userDeets.getUserName() + " " + actionRequest.getAction());
