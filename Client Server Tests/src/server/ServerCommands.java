@@ -8,6 +8,11 @@ import java.util.Arrays;
 import sharedPackages.LoginDeets;
 import sharedPackages.Message;
 
+/*
+ * commands to have:
+ * 
+ */
+
 
 public class ServerCommands extends Thread {
 	private BufferedReader commandIn;
