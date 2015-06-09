@@ -134,5 +134,9 @@ public class ClientGUI {
 //			System.out.println("Adding: " + users.get(i) + " to the GUI");
 		}
 	}
+	
+	public static void exit(){
+		root.dispose();
+	}
 
 }

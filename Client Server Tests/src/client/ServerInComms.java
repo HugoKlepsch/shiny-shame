@@ -63,6 +63,7 @@ public class ServerInComms extends Thread{
 					
 				} else if(actionRequest.getAction() == ActionRequest.SCKICK){
 					ClientMain.setAlive(false);
+					ClientGUI.exit();
 				}
 			} 
 //			scStream.close();
