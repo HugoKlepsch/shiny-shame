@@ -25,7 +25,7 @@ public class Connection extends Thread {
 	private Socket outSocket;
 	private ObjectOutputStream scStream;
 	private ObjectInputStream csStream;
-	private LoginDeets userDeets;
+	private LoginDeets userDeets = new LoginDeets("Connecting", null);
 	private static LoginDeets rootDeets = new LoginDeets("root", "dank");
 
 	public Connection(Socket sock) {
