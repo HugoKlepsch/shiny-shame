@@ -74,7 +74,7 @@ public class ServerCommands extends Thread {
 	
 	private void kick(String[] args) throws IOException{
 		Vector<String> users = mainThread.getUsers3();
-		String[] userArray = (String[]) users.toArray();
+		Object[] userArray =  users.toArray();
 		String userToKick;
 		if(args[0].equals("-u")){
 			userToKick = args[1];
