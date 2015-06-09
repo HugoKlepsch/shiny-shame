@@ -154,6 +154,8 @@ class ThreadManager extends Thread{
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+					} catch (NullPointerException e){
+						e.printStackTrace();
 					}
 					if (!mainThread.connections.get(i).isAlive()) { // if the connection closes
 						mainThread.connections.remove(i); // remove it from our list
