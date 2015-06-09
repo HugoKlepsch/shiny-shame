@@ -148,18 +148,20 @@ class ThreadManager extends Thread{
 				e1.printStackTrace();
 			}
 			for (int i = 0; i < mainThread.connections.size(); i++) {
-				try {
-					Thread.sleep(20);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if (!mainThread.connections.get(i).isAlive()) { // if the connection closes
-					mainThread.connections.remove(i); // remove it from our list
-					System.out.println("removed connection number: " + i);
-					break; // to avoid index errors after removing an index
-				} else {
-					tempConnectedUsers.addElement(mainThread.connections.get(i).getUserDeets().getUserName());
+				if (!(mainThread.connections.get(i) == null)) {
+					try {
+						Thread.sleep(20);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if (!mainThread.connections.get(i).isAlive()) { // if the connection closes
+						mainThread.connections.remove(i); // remove it from our list
+						System.out.println("removed connection number: " + i);
+						break; // to avoid index errors after removing an index
+					} else {
+						tempConnectedUsers.addElement(mainThread.connections.get(i).getUserDeets().getUserName());
+					}
 				}
 			}
 			mainThread.setUsers3(tempConnectedUsers);
