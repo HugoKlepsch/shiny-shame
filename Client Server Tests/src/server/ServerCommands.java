@@ -58,6 +58,14 @@ public class ServerCommands extends Thread {
 				System.out.println("message, args = the message sent - sends a message as root");
 				System.out.println("list, no args - lists all users with id numbers");
 				System.out.println("kick, args = -u 'username', -id 'id number', -a 'all' - kicks users");
+				System.out.println("refresh, no args - kicks all users then deletes all messages");
+			} else if(command.equals("refresh")){
+				try {
+					refresh();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		}
@@ -99,6 +107,12 @@ public class ServerCommands extends Thread {
 				mainThread.connections.elementAt(index).kick();
 			}
 		}
+	}
+	
+	private void refresh() throws IOException{
+		String[] all = {"-a"};
+		kick(all);
+		mainThread.messages.clear();
 	}
 	
 	

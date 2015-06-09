@@ -24,7 +24,7 @@ public class mainThread {
 	public static Vector<Connection> connections;
 	private static Vector<String> users;
 	private static Vector<String> connectedUsers;
-	private static Vector<Message> messages;
+	public static Vector<Message> messages;
 
 	/**
 		 * @author hugo
