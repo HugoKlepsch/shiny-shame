@@ -54,6 +54,10 @@ public class ServerCommands extends Thread {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			} else if(command.equals("help")){
+				System.out.println("message, args = the message sent - sends a message as root");
+				System.out.println("list, no args - lists all users with id numbers");
+				System.out.println("kick, args = -u 'username', -id 'id number', -a 'all' - kicks users");
 			}
 			
 		}
