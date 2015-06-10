@@ -8,9 +8,6 @@ import java.util.Vector;
  *
  */
 public class ActionRequest implements Serializable {
-	/**
-	 * 
-	 */
 	public static final int CSGETCURRENTMESSAGEINDEX = 1;
 	public static final int CSGETMESSAGE = 2;
 	public static final int CSSENDMESSAGE = 3;
