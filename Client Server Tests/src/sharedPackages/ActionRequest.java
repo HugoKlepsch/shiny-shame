@@ -5,9 +5,11 @@ import java.util.Vector;
 /**
  * 
  * @author graham
+ * @description - class that is sent through the stream, holds all data that is transfered
  *
  */
 public class ActionRequest implements Serializable {
+	//constants for integers that represent different actions
 	public static final int CSGETCURRENTMESSAGEINDEX = 1;
 	public static final int CSGETMESSAGE = 2;
 	public static final int CSSENDMESSAGE = 3;
