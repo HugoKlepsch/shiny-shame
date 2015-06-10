@@ -22,6 +22,7 @@ public class mainThread {
 	public static int outPort = 6969;
 	private static ServerSocket serverSocket;
 	public static Vector<Connection> connections;
+	@Deprecated
 	private static Vector<String> users;
 	private static Vector<String> connectedUsers;
 	public static Vector<Message> messages;
@@ -98,20 +99,20 @@ public class mainThread {
 	public static Message getMessage(int index) {
 		return messages.get(index);
 	}
-	
+	@Deprecated
 	public static void addUser(String username){
 		users.addElement(username);
 		System.out.println("Added: " + username + " to the array");
 	}
-	
+	@Deprecated
 	public static void removeUser(String username){
 		System.out.println("Attempted to remove " + username + " from list. " + (users.remove(username) ? "Successful": "Failed:"));
 	}
-	
+	@Deprecated
 	public static Vector<String> getUsers(){
 		return users;
 	}
-	
+	@Deprecated
 	public static Vector<String> getUsers2(){
 		Vector<String> userList = new Vector<String>();
 		for(int i = 0; i<connections.size();i++){

@@ -2,7 +2,11 @@ package sharedPackages;
 
 import java.io.Serializable;
 import java.util.Vector;
-
+/**
+ * 
+ * @author graham
+ *
+ */
 public class ActionRequest implements Serializable {
 	/**
 	 * 

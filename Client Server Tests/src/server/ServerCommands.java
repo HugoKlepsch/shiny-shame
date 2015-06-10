@@ -17,7 +17,11 @@ import sharedPackages.Message;
  * kick - args either -u username or -id id to kick, -a kicks all
  */
 
-
+/**
+ * 
+ * @author graham
+ *
+ */
 public class ServerCommands extends Thread {
 	private BufferedReader commandIn;
 	private LoginDeets root;

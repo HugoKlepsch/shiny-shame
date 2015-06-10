@@ -31,7 +31,11 @@ public class ServerOutComms extends Thread{
 		this.ipAddress = ipAddress;
 		this.userDeets = userDeets;
 	}
-	
+	/**
+	 * @author graham
+	 * @param message
+	 * @throws IOException
+	 */
 	private void sendMsg(Message message) throws IOException{
 		csStream.writeObject(new ActionRequest(ActionRequest.CSSENDMESSAGE, message));
 		csStream.flush();

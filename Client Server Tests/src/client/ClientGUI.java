@@ -18,6 +18,12 @@ import javax.swing.text.DefaultCaret;
 
 import sharedPackages.Message;
 
+
+/**
+ * 
+ * @author graham
+ *
+ */
 public class ClientGUI {
 	private static JFrame root;
 	private static JPanel mainPanel;

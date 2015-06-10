@@ -13,7 +13,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import sharedPackages.LoginDeets;
-
+/**
+ * 
+ * @author graham
+ *
+ */
 public class LoginGUI {
 	private static JFrame root;
 	private static JPanel mainPanel;

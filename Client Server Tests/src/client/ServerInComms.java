@@ -15,7 +15,7 @@ import java.net.Socket;
 import sharedPackages.ActionRequest;
 
 /**
- * @author hugo
+ * @author graham
  *
  */
 public class ServerInComms extends Thread{
