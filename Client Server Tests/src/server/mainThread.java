@@ -69,6 +69,7 @@ public class mainThread {
 	 */
 	private static String getSelfIP() throws IOException {
 		Socket ipTest = new Socket("192.168.1.1", 80);
+	
 		String selfIP = ipTest.getLocalAddress().getHostAddress();
 		ipTest.close();
 		return selfIP;
