@@ -70,6 +70,7 @@ public class ServerOutComms extends Thread{
 		csStream.flush();
 		//create a asking for current index request for later use
 		ActionRequest indexRequest = new ActionRequest(ActionRequest.CSGETCURRENTMESSAGEINDEX);
+		//while being told to stay alive
 		while(ClientMain.StayAlive()){
 			//delay the thread for less network usage
 			Thread.sleep(loopDelay);
