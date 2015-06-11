@@ -130,7 +130,7 @@ public class Connection extends Thread {
 				} else if (actionRequest.getAction() == ActionRequest.CSSENDMESSAGE) {
 					System.out.println(userDeets.getUserName() + "sent message" + actionRequest.getMessage().getMessage());
 					message = actionRequest.getMessage();
-					//adds the message received to the queue
+					//adds the message received to the message vector
 					mainThread.addMessage(message);
 					//sends the list of users
 					sendUsers();
@@ -141,7 +141,7 @@ public class Connection extends Thread {
 					String msg = userDeets.getUserName() + " connected";
 					//creates a new message as root that states the user is connecting
 					Message connectMsg = new Message(rootDeets, msg);
-					//adds the message to the queue
+					//adds the message to the message vector
 					mainThread.addMessage(connectMsg);
 					//sends the list of users
 					sendUsers();
@@ -151,7 +151,7 @@ public class Connection extends Thread {
 			String msg = userDeets.getUserName() + " disconnected";
 			//creates a new message as root that states the user disconnected
 			Message disConnectMsg = new Message(rootDeets, msg);
-			//adds the message to the queue
+			//adds the message to the message vector
 			mainThread.addMessage(disConnectMsg);
 			//sends the user list
 			sendUsers();
