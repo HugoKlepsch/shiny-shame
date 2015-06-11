@@ -209,7 +209,8 @@ public class ClientMain {
 	}
 
 	/**
-	 * @return  stayAlive value 
+	 * @return  stayAlive value, used to determine whether the client should keep running, or
+	 * exit gracefully.
 	 */
 	public static boolean StayAlive() {
 		return stayAlive;
