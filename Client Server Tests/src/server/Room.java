@@ -18,7 +18,7 @@ import sharedPackages.Message;
  * @author hugo
  *
  */
-public class mainThread {
+public class Room {
 	public static int outPort = 6969; // this is the port that all of the server communications run through
 	private static ServerSocket serverSocket; // The serversocket is the type of socket that accepts incomming
 												// connections, and produces a standard socket of it's own.
@@ -186,7 +186,7 @@ public class mainThread {
 		 * @Description: Sets the global variable.
 	 */
 	public static void setUsers3(Vector<String> connectedUsers) {
-		mainThread.connectedUsers = connectedUsers;
+		Room.connectedUsers = connectedUsers;
 	}
 
 }
@@ -214,8 +214,8 @@ class ThreadManager extends Thread { // this class is started in a new thread an
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			for (int i = 0; i < mainThread.connections.size(); i++) { // for each connection to the server.
-				if (!(mainThread.connections.get(i) == null)) { // edge case where the object exists, but has yet to be
+			for (int i = 0; i < Room.connections.size(); i++) { // for each connection to the server.
+				if (!(Room.connections.get(i) == null)) { // edge case where the object exists, but has yet to be
 																// fully initialized
 					try {
 						Thread.sleep(20); //less CPU usage
@@ -225,16 +225,16 @@ class ThreadManager extends Thread { // this class is started in a new thread an
 					} catch (NullPointerException e) {
 						e.printStackTrace();
 					}
-					if (!mainThread.connections.get(i).isAlive()) { // if the connection closes
-						mainThread.connections.remove(i); // remove it from our list
+					if (!Room.connections.get(i).isAlive()) { // if the connection closes
+						Room.connections.remove(i); // remove it from our list
 						System.out.println("removed connection number: " + i);
 						break; // to avoid index errors after removing an index
 					} else {
-						tempConnectedUsers.addElement(mainThread.connections.get(i).getUserDeets().getUserName());
+						tempConnectedUsers.addElement(Room.connections.get(i).getUserDeets().getUserName());
 					}
 				}
 			}
-			mainThread.setUsers3(tempConnectedUsers); //update the global list of users with our updated list. 
+			Room.setUsers3(tempConnectedUsers); //update the global list of users with our updated list. 
 		}
 	}
 }

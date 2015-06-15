@@ -65,7 +65,7 @@ public class Connection extends Thread {
 	 */
 	private void sendUsers() throws IOException{
 		//reads the list of usernames to a vector array
-		Vector<String> userList = mainThread.getUsers3();
+		Vector<String> userList = Room.getUsers3();
 		//creates a new ActionRequest with the user list
 		ActionRequest sendUserRequest = new ActionRequest(ActionRequest.SCSENDUSERS, userList);
 		//writes the ActionRequest to the stream
@@ -109,7 +109,7 @@ public class Connection extends Thread {
 				//if and else if statements check what type of action request it is
 				if (actionRequest.getAction() == ActionRequest.CSGETCURRENTMESSAGEINDEX) {
 					// gets the current message index
-					currIndex = mainThread.getCurrentMessageIndex();
+					currIndex = Room.getCurrentMessageIndex();
 					//creates a new action request with the index
 					ActionRequest sendIndexRequest = new ActionRequest(ActionRequest.SCSENDCURRENTMESSAGEINDEX, currIndex);
 					//writes the action request to the stream
@@ -123,7 +123,7 @@ public class Connection extends Thread {
 					System.out.println(userDeets.getUserName() + " wants message #" + actionRequest.getIndex());
 					wantedIndex = actionRequest.getIndex();
 					//gets the message at the index wanted
-					message = mainThread.getMessage(wantedIndex);
+					message = Room.getMessage(wantedIndex);
 					//sends that message
 					sendMsg(message);
 					
@@ -131,7 +131,7 @@ public class Connection extends Thread {
 					System.out.println(userDeets.getUserName() + "sent message" + actionRequest.getMessage().getMessage());
 					message = actionRequest.getMessage();
 					//adds the message received to the message vector
-					mainThread.addMessage(message);
+					Room.addMessage(message);
 					//sends the list of users
 					sendUsers();
 				} else if (actionRequest.getAction() == ActionRequest.CSCONNECT) {
@@ -142,7 +142,7 @@ public class Connection extends Thread {
 					//creates a new message as root that states the user is connecting
 					Message connectMsg = new Message(rootDeets, msg);
 					//adds the message to the message vector
-					mainThread.addMessage(connectMsg);
+					Room.addMessage(connectMsg);
 					//sends the list of users
 					sendUsers();
 				}
@@ -152,7 +152,7 @@ public class Connection extends Thread {
 			//creates a new message as root that states the user disconnected
 			Message disConnectMsg = new Message(rootDeets, msg);
 			//adds the message to the message vector
-			mainThread.addMessage(disConnectMsg);
+			Room.addMessage(disConnectMsg);
 			//sends the user list
 			sendUsers();
 			System.out.println(msg);
