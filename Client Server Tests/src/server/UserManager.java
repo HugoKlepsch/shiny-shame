@@ -28,9 +28,10 @@ public class UserManager {
 		 * Date of creation: Aug 5, 2015 
 		 * @param: None
 		 * @return: None
+	 * @throws IOException 
 		 * @Description: ( ͡° ͜ʖ ͡°)
 		 */
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException{
 		String selfIP = getSelfIP(); // this method returns the local IP address of the server
 		System.out.println("Self IP: " + selfIP); // we print out the local IP address
 
