@@ -8,10 +8,14 @@
 
 package server;
 
+import java.util.Vector;
+
 /**
  * @author hugo
  *
  */
 public class RoomManager {
+	
+	private static Vector<Room> rooms;
 
 }
